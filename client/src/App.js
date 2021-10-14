@@ -1,11 +1,46 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import LoginForm from './components/LoginComponent';
+import { MyNavBar } from './components/NavBarComponent';
 import { Container, Row, Col, Alert, Button, Spinner } from "react-bootstrap";
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import API from './API';
 
 function App() {
   const [ticket, setTicket] = useState({});
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  // login utente, si appoggia sull'apposita API che restituisce l'id dell'utente loggato 
+  // le variabili di stato dirty e message vengono "pulite"
+  const doLogIn = async (credentials) => {
+    try {
+      const user = await API.logIn(credentials);
+      setUser(user);
+      setLoggedIn(true);
+      //setLoading(true);
+      //setDirty(true);
+    }
+    catch (err) {
+      //handleErrors(err)
+      throw err;
+    }
+  }
+
+  // logout utente, si puliscono tutte le variabili di stato ad eccezione dei template 
+  // e dei meme (che vengono successivamente ricalcolati a seguito della useEffect #3)
+  const doLogOut = async () => {
+    await API.logOut();
+    // clean up everything
+    setLoggedIn(false);
+    setUser(null);
+    //setName(null);
+    //setDirty(true)
+    //setLoading(true);
+  }
+
 
   function onButtonClick() {
     setIsLoading(true);
@@ -18,21 +53,41 @@ function App() {
   }
 
   return (
-    <Container>
-      <Row className='vh-100 justify-content-center align-items-center'>
-        <Col className='d-flex justify-content-center align-items-center flex-column'>
-          {isLoading ? (
-            <Spinner animation='border' variant='primary' />
-          ) : (
-            <>
-              <Button onClick={onButtonClick}>Call next ticket!</Button>
-              <h1>{ticket.number}</h1>
-              {error ? <Alert>{error}</Alert> : null}
-            </>
-          )}
-        </Col>
-      </Row>
-    </Container>
+    <Router>
+      <Container fluid className="App">
+        <Row>
+          {loggedIn ? <MyNavBar loggedIn={loggedIn} logout={doLogOut} user={user.username} /> : <MyNavBar loggedIn={loggedIn} logout={doLogOut} user={""}/>}
+        </Row>
+        <Switch>
+
+          <Route exact path="/">
+            <Row className='vh-100 justify-content-center align-items-center'>
+              <Col className='d-flex justify-content-center align-items-center flex-column'>
+                {isLoading ? (
+                  <Spinner animation='border' variant='primary' />
+                ) : (
+                  <>
+                    <Button onClick={onButtonClick}>Call next ticket!</Button>
+                    <h1>{ticket.number}</h1>
+                    {error ? <Alert>{error}</Alert> : null}
+                  </>
+                )}
+              </Col>
+            </Row>
+          </Route>
+
+          <Route exact path="/login">
+            {loggedIn ? <Redirect to="/" /> : <LoginForm login={doLogIn} />}
+          </Route>
+
+          <Route path="/">
+            <Redirect to="/" />
+          </Route>
+        </Switch>
+
+      </Container>
+    </Router>
+
   );
 }
 
