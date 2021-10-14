@@ -1,0 +1,17 @@
+{
+  "name": "office-queue-management-server",
+  "version": "1.0.0",
+  "description": "The back-end for the office-queue-management app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.13.0",
+    "mongodb": "^4.1.3"
+  }
+}
