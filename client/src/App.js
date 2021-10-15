@@ -56,24 +56,38 @@ function App() {
     <Router>
       <Container fluid className="App">
         <Row>
-          {loggedIn ? <MyNavBar loggedIn={loggedIn} logout={doLogOut} user={user.username} /> : <MyNavBar loggedIn={loggedIn} logout={doLogOut} user={""}/>}
+          {loggedIn ? <MyNavBar loggedIn={loggedIn} logout={doLogOut} user={user} /> : <MyNavBar loggedIn={loggedIn} logout={doLogOut} user={""} />}
         </Row>
         <Switch>
 
           <Route exact path="/">
-            <Row className='vh-100 justify-content-center align-items-center'>
-              <Col className='d-flex justify-content-center align-items-center flex-column'>
-                {isLoading ? (
-                  <Spinner animation='border' variant='primary' />
-                ) : (
-                  <>
-                    <Button onClick={onButtonClick}>Call next ticket!</Button>
-                    <h1>{ticket.number}</h1>
-                    {error ? <Alert>{error}</Alert> : null}
-                  </>
-                )}
-              </Col>
+
+            <Row>
+              {loggedIn && user.role == 'officer' ?
+                <div>
+                  <h1 className="d-flex justify-content-center"> Officer Page</h1>
+                  <Row className='vh-100 justify-content-center align-items-center'>
+                    <Col className='d-flex justify-content-center align-items-center flex-column'>
+                      {isLoading ? (
+                        <Spinner animation='border' variant='primary' />
+                      ) : (
+                        <>
+                          <Button onClick={onButtonClick}>Call next ticket!</Button>
+                          <h1>{ticket.number}</h1>
+                          {error ? <Alert>{error}</Alert> : null}
+                        </>
+                      )}
+                    </Col>
+                  </Row>
+                </div> : ''}
+
+              {loggedIn && user.role == 'admin' ? <h1 className="d-flex justify-content-center">Admin Page</h1> : ''}
+
+              {loggedIn && user.role == 'manager' ? <h1 className="d-flex justify-content-center">Manager Page</h1> : ''}
+              
+              {loggedIn ? '' : <h1 className="d-flex justify-content-center">User Page</h1>}
             </Row>
+
           </Route>
 
           <Route exact path="/login">

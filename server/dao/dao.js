@@ -26,24 +26,31 @@ exports.getTicketsByServiceType = async (serviceTypeId) => {
 };
 
 // dato un id restituisce l'utente corrispondente 
-exports.getUserByUsername = async (username) => {
+exports.getUserById = async (id) => {
   return await db
     .collection("users")
-    .findOne({ username: username })
+    .findOne({ id: id }, { projection: { id: 1, username:1, role: 1 } })
     .catch((err) => {
       console.error("error reading data from database: " + err);
     });
 };
 
-exports.getUser = async (username, password) => {
-  const myUser = await db.collection("users").findOne({ username: username });
+exports.getUser = (username, password) => {
+  return new Promise((resolve, reject) => {
+    db.collection("users").findOne({ username: username }, function (err, user) {
+      if (err) {
+        console.error("error reading data from database: " + err);
+      }
+      else {
+        bcrypt.compare(password, user.password).then(result => {
+          if (result)
+            resolve(user);
+          else
+            resolve(false);
+        });
+      }
+    })
 
-  if (myUser) {
-    const user = { username: myUser.username, role: myUser.role};
-  }
-  else {
-    console.error("error reading data from database: " + err);
-  }
+  })
 
-  return  myUser;
 };

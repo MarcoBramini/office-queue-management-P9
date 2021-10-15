@@ -4,7 +4,7 @@ const passport = require('passport'); // middleware di autenticazione
 const LocalStrategy = require('passport-local').Strategy; // username e password per il login
 const session = require('express-session'); // abilita le sessioni
 const cors = require("cors");
-const { getTicketsByServiceType, getUser, getUserByUsername: getUserByUsername } = require("./dao/dao");
+const { getTicketsByServiceType, getUser, getUserById } = require("./dao/dao");
 
 /*** impostiamo Passport ***/
 // impostiamo la strategia di login "username e password"
@@ -26,8 +26,8 @@ passport.serializeUser((user, done) => {
 });
 
 // partendo dai dati nella sessione, estraiamo l'utente corrente (loggato) 
-passport.deserializeUser((username, done) => {
-  getUserByUsername(username)
+passport.deserializeUser((id, done) => {
+  getUserById(id)
     .then(user => {
       done(null, user); // questo sarà disponibile in req.user
     }).catch(err => {
@@ -91,7 +91,6 @@ app.post('/api/sessions', function (req, res, next) {
   })(req, res, next);
 });
 
-
 // GET /sessions/current
 // controlla se l'utente è loggato o meno
 app.get('/api/sessions/current', (req, res) => {
@@ -104,8 +103,8 @@ app.get('/api/sessions/current', (req, res) => {
 
 // GET /api/users/:id
 // dato l'id restituisce l'utente relativo 
-app.get('/api/users/:username', (req, res) => {
-  getUserByUsername(req.params.username)
+app.get('/api/users/:id', (req, res) => {
+  getUserById(req.params.id)
     .then((user) => {
       res.send(user);
     })

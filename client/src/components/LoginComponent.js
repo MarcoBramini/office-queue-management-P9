@@ -2,17 +2,17 @@ import { Form, Button, Container, Alert, Row } from 'react-bootstrap';
 import { React, useState } from 'react';
 
 function LoginForm(props) {
-    const [username, setUsername] = useState('officer1');
-    const [password, setPassword] = useState('officer1');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [show, setShow] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
         setErrorMessage('');
-        // validazione dei campi inseriti 
+        // input field validation
         let valid = true;
-        if (username === '' || password.length < 6) {
+        if (username === '' || password.length < 5) {
             valid = false;
             setErrorMessage('Email cannot be empty and password must be at least six character long.');
             setShow(true);

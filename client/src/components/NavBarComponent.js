@@ -17,7 +17,7 @@ function MyNavBar(props) {
                 Se non sono loggato posso clickare sul bottone LOGIN per fare il login (verrò reinderizzato a /login)*/}
                 {props.loggedIn ?
                     <>
-                        <Navbar.Text className="font-italic mx-3 font-weight-bold">Welcome {props.user}!</Navbar.Text>
+                        <Navbar.Text className="font-italic mx-3 font-weight-bold">Welcome {props.user.role}, {props.user.username}!</Navbar.Text>
                         <Link to="/">
                             <Button variant="outline-light" className=" mx-2" type="submit" onClick={props.logout}>LOG OUT</Button></Link>
                     </>
