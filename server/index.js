@@ -1,8 +1,9 @@
 const express = require("express");
+const { param } = require("express-validator");
 const path = require("path");
 const cors = require("cors");
+
 const { getTicketsByServiceType } = require("./dao/dao");
-const { param } = require("express-validator");
 
 const port = process.env.PORT || 3001;
 
