@@ -1,7 +1,7 @@
 "use strict";
 
 const { MongoClient } = require("mongodb");
-console.log(process.env.MONGO_CONN_STR);
+
 const client = new MongoClient(process.env.MONGO_CONN_STR);
 
 const db = client.db("office-queue-management");
