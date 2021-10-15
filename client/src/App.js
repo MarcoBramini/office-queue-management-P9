@@ -8,7 +8,7 @@ function App() {
 
   function onButtonClick() {
     setIsLoading(true);
-    fetch("/tickets/next")
+    fetch("/tickets/bills-payment")
       .then((response) => {
         response.json().then((data) => setTicket(data[0]));
       })

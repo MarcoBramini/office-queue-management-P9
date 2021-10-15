@@ -13,8 +13,9 @@ app.use(json());
 
 app.use("/", express.static(path.resolve(__dirname, "../client/build")));
 
-app.get("/tickets/next", (req, res) => {
-  getTicketsByServiceType("bills-payment")
+app.get("/tickets/:serviceTypeId", (req, res) => {
+  const serviceTypeId = req.params.serviceTypeId;
+  getTicketsByServiceType(serviceTypeId)
     .then((tickets) => {
       res.send(tickets);
     })
@@ -22,5 +23,8 @@ app.get("/tickets/next", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Server listening at :${port}`);
 });
+
+// Export main app for testing
+module.exports = app;
