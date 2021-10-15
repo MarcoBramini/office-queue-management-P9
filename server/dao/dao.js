@@ -18,8 +18,5 @@ exports.getTicketsByServiceType = async (serviceTypeId) => {
   return await db
     .collection("tickets")
     .find({ serviceTypeId: serviceTypeId })
-    .toArray()
-    .catch((err) => {
-      console.error("error reading data from database: " + err);
-    });
+    .toArray();
 };

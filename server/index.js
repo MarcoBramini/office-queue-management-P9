@@ -18,7 +18,7 @@ app.get("/tickets/next", (req, res) => {
     .then((tickets) => {
       res.send(tickets);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error("error reading data from database: " + err));
 });
 
 app.listen(port, () => {
