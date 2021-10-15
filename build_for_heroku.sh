@@ -2,4 +2,4 @@
 
 npm install
 cd client && npm run build
-cp -Rserver/* ./asd
+cp -R server/* ./asd
