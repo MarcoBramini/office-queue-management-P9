@@ -32,3 +32,6 @@ jobs:
       - name: Build React App
         run: npm run build
         working-directory: client
+      
+      - name: Move server app to root
+        run: mv server/* ./
