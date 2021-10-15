@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd client && npm install
-cd client && npm run build
+npm install --prefix client/
+npm run build --prefix client/
 cp -R server/* ./asd
