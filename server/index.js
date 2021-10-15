@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(json());
 
-app.use("/", express.static(path.resolve(__dirname, "client/build")));
+app.use("/", express.static(path.resolve(__dirname, "../client/build")));
 
 app.get("/tickets/next", (req, res) => {
   getTicketsByServiceType("bills-payment")
