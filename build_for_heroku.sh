@@ -1,5 +1,5 @@
 #!/bin/bash
 
-npm install --prefix client/
+npm ci --prefix client/
 npm run build --prefix client/
 cp -R server/* ./
