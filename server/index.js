@@ -4,7 +4,7 @@ const path = require("path");
 const cors = require("cors");
 const { getTicketsByServiceType } = require("./dao/dao");
 
-const port = 3001;
+const port = process.env.port || 3001;
 
 const app = express();
 
