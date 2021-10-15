@@ -2,4 +2,4 @@
 
 npm install --prefix client/
 npm run build --prefix client/
-cp -R server/* ./asd
+cp -R server/* ./
