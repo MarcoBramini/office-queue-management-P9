@@ -4,6 +4,6 @@
     "description": "A management app for office queues",
     "scripts": {
         "start":"npm start --prefix server/",
-        "build": "npm ci --prefix client/ & npm run build --prefix client/"
+        "build": "npm ci --prefix client/ && npm run build --prefix client/"
     }
 }
