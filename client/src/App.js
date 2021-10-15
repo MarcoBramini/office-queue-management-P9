@@ -8,7 +8,7 @@ function App() {
 
   function onButtonClick() {
     setIsLoading(true);
-    fetch("http://localhost:3001/tickets/next")
+    fetch("/tickets/next")
       .then((response) => {
         response.json().then((data) => setTicket(data[0]));
       })
