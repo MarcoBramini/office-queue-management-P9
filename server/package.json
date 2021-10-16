@@ -1,0 +1,24 @@
+{
+  "name": "office-queue-management-server",
+  "version": "1.0.0",
+  "description": "The back-end for the office-queue-management app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha ./test/* --delay --exit"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.13.0",
+    "mocha": "^9.1.3",
+    "mongodb": "^4.1.3"
+  },
+  "devDependencies": {
+    "mongo-unit": "^2.0.1"
+  }
+}
