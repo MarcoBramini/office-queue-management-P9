@@ -19,7 +19,7 @@ exports.getTicketsByServiceType = async (serviceTypeId) => {
     .toArray();
 };
 
-exports.recordTicketAsServed = async (ticketId) => {
+exports.changeTicketAsServed = async (ticketId) => {
   var newvalue = { $set: { status: "served" } };
   db.collection("tickets").updateOne(
     { number: ticketId },
@@ -29,6 +29,18 @@ exports.recordTicketAsServed = async (ticketId) => {
       console.log("document updated");
     }
   );
+};
+
+exports.recordServeAction = async (ticketId, counterId) => {
+  var myRecord = {
+    ticketNumber: ticketId,
+    counterId: counterId,
+    servedAt: new Date(),
+  };
+  db.collection("counter-record").insertOne(myRecord, function (err, res) {
+    if (err) throw err;
+    console.log("document inserted");
+  });
 };
 
 exports.getLatestTicketFromCounter = async (counterId) => {

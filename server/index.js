@@ -6,7 +6,8 @@ const cors = require("cors");
 const {
   getTicketsByServiceType,
   getLatestTicketFromCounter,
-  recordTicketAsServed,
+  changeTicketAsServed,
+  recordServeAction,
 } = require("./dao/dao");
 
 const port = process.env.PORT || 3001;
@@ -44,7 +45,8 @@ app.get(
     getLatestTicketFromCounter(counterId)
       .then((tickets) => {
         var latestTicket = tickets[0];
-        recordTicketAsServed(latestTicket.number);
+        changeTicketAsServed(latestTicket.number);
+        recordServeAction(latestTicket.number, counterId);
         res.send(latestTicket);
       })
       .catch((err) =>
