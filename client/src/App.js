@@ -25,6 +25,7 @@ function App() {
     }
     catch (err) {
       //handleErrors(err)
+      console.log("APPJSERROR "+err);
       throw err;
     }
   }
