@@ -18,3 +18,19 @@ exports.getTicketsByServiceType = async (serviceTypeId) => {
     .find({ serviceTypeId: serviceTypeId })
     .toArray();
 };
+
+exports.recordTicketAsServed = async (ticketId) => {
+  var newvalue = { $set: { status: "served" } };
+  db.collection("tickets").updateOne(
+    { number: ticketId },
+    newvalue,
+    function (err, res) {
+      if (err) throw err;
+      console.log("document updated");
+    }
+  );
+};
+
+exports.getLatestTicketFromCounter = async (counterId) => {
+  return await db.collection("tickets").find({ status: "waiting" }).toArray();
+};

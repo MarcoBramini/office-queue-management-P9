@@ -3,7 +3,11 @@ const { param } = require("express-validator");
 const path = require("path");
 const cors = require("cors");
 
-const { getTicketsByServiceType } = require("./dao/dao");
+const {
+  getTicketsByServiceType,
+  getLatestTicketFromCounter,
+  recordTicketAsServed,
+} = require("./dao/dao");
 
 const port = process.env.PORT || 3001;
 
@@ -22,6 +26,26 @@ app.get(
     getTicketsByServiceType(serviceTypeId)
       .then((tickets) => {
         res.send(tickets);
+      })
+      .catch((err) =>
+        console.error("error reading data from database: " + err)
+      );
+  }
+);
+
+// Call latest ticket in the database from spesific counter
+// Then update that ticket's status to served
+
+app.get(
+  "/tickets/serve/:counterId",
+  param("counterId").isString(),
+  (req, res) => {
+    const counterId = req.params.counterId;
+    getLatestTicketFromCounter(counterId)
+      .then((tickets) => {
+        var latestTicket = tickets[0];
+        recordTicketAsServed(latestTicket.number);
+        res.send(latestTicket);
       })
       .catch((err) =>
         console.error("error reading data from database: " + err)
