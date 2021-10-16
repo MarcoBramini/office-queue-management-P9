@@ -49,7 +49,8 @@ app.get(
         var latestTicket = tickets[0];
         changeTicketAsServed(latestTicket.number);
         recordServeAction(latestTicket.number, counterId);
-        res.send(latestTicket);
+        //res.send(latestTicket);
+        res.json(latestTicket);
       })
       .catch((err) =>
         console.error("error reading data from database: " + err)

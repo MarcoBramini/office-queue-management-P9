@@ -1,37 +1,11 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Alert, Button, Spinner } from "react-bootstrap";
 
+import OfficerPage from "./components/OfficerPage";
 function App() {
-  const [ticket, setTicket] = useState({});
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  function onButtonClick() {
-    setIsLoading(true);
-    fetch("/tickets/bills-payment")
-      .then((response) => {
-        response.json().then((data) => setTicket(data[0]));
-      })
-      .catch((err) => setError(err))
-      .finally(() => setIsLoading(false));
-  }
-
   return (
-    <Container>
-      <Row className='vh-100 justify-content-center align-items-center'>
-        <Col className='d-flex justify-content-center align-items-center flex-column'>
-          {isLoading ? (
-            <Spinner animation='border' variant='primary' />
-          ) : (
-            <>
-              <Button onClick={onButtonClick}>Call next ticket!</Button>
-              <h1>{ticket.number}</h1>
-              {error ? <Alert>{error}</Alert> : null}
-            </>
-          )}
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <OfficerPage />
+    </>
   );
 }
 
