@@ -2,6 +2,7 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import LoginForm from './components/LoginComponent';
 import { MyNavBar } from './components/NavBarComponent';
+import {UserPage} from './components/UserComponent';
 import { Container, Row, Col, Alert, Button, Spinner } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import API from './API';
@@ -86,7 +87,7 @@ function App() {
 
               {loggedIn && user.role == 'manager' ? <h1 className="d-flex justify-content-center">Manager Page</h1> : ''}
               
-              {loggedIn ? '' : <h1 className="d-flex justify-content-center">User Page</h1>}
+              {loggedIn==false? <UserPage/> : ''}
             </Row>
 
           </Route>

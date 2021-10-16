@@ -12,7 +12,7 @@ function LoginForm(props) {
     const [reportErrorMessage, setReportErrorMessage] = useState("");
 
     let data = { username: username, password: password };
-    let rules = { username: 'required|alpha_num', password: 'required|min:6' };
+    let rules = { username: 'required|alpha_num', password: 'required|min:5' };
     let validation = new Validator(data, rules, {required: "Enter your :attribute", alpha_num: "Username must be alphanumeric", min: "Password must be at least of 6 characters"});
 
     const handleSubmit = (event) => {
