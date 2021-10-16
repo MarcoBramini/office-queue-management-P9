@@ -19,7 +19,7 @@ class TicketList extends React.Component{
         return (
             
                     <ListGroup>
-                        <Container>
+                        <Container  className="mt-4">
                         {ticketsToRender?ticketsToRender.map((ticket) => <Col><ListGroup.Item><Ticket ticket={ticket}/></ListGroup.Item><hr></hr></Col> ):null}
                         </Container>
                     </ListGroup>
