@@ -1,3 +1,4 @@
+const { assert } = require("chai");
 let chai = require("chai");
 let expect = chai.expect;
 let chaiHttp = require("chai-http");
@@ -42,6 +43,41 @@ describe("Start Tickets APIs testing:", () => {
             "bills-payment",
           ]);
 
+          done();
+        });
+    });
+  });
+});
+
+
+// ServiceType APIs tests
+describe("Start ServiceTypes APIs testing:", () => {
+  beforeEach(() => mongoUnit.load(testData.serviceTypesCollection));
+
+  afterEach(() => mongoUnit.drop());
+
+  const testService={
+  "id": "bills-payment",
+  "counterIDs": ["2", "4", "6"],
+  "avgServingTime": 15,
+  "ticketLabel": "B"
+  };
+
+  describe("GET /tickets/bills-payment", () => {
+    it("it should write the service type to the database ", (done) => {
+      chai
+        .request(server)
+        .post("/servicetypes")
+        .send(testService)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res.status).to.be.equal(200);
+          expect(res.body.length).to.be.equal(1);
+          expect(res.body).to.be.an("object");
+          expect(res.body.id).to.be.equal(testService.id);
+          expect(res.body.counterIDs).to.be.equal(testService.counterIDs);
+          expect(res.body.avgServingTime).to.be.equal(testService.avgServingTime);
+          expect(res.body.ticketLabel).to.be.equal(testService.ticketLabel);
           done();
         });
     });

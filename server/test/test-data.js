@@ -12,3 +12,9 @@ exports.ticketsCollection = {
     },
   ],
 };
+
+exports.serviceTypesCollection = {
+  "service-types" : [
+    {},
+  ],
+};

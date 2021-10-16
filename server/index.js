@@ -29,6 +29,20 @@ app.get(
   }
 );
 
+
+//post new serviceType:
+app.post( "/serviceTypes",  (req, res) => {
+    const serviceType = req.body;
+    insertServiceType(serviceType)
+      .then((written) => {
+        res.send(written);
+      })
+      .catch((err) =>
+        console.error("error writing data in the database: " + err)
+      );
+  }
+);
+
 app.listen(port, () => {
   console.log(`Server listening at :${port}`);
 });
