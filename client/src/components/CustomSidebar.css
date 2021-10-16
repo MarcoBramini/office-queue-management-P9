@@ -1,0 +1,17 @@
+.menu-bars {
+    margin-left: 2rem;
+    font-size: 2rem;
+    background: none;
+}
+
+.nav-menu{
+    background-color:#364150;
+    color:#ddd;
+    width: 250px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top:0;
+    /*left: -100%;*/
+}
