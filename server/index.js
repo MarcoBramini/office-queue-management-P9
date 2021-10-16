@@ -36,6 +36,8 @@ app.get(
 
 // Call latest ticket in the database from spesific counter
 // Then update that ticket's status to served
+// Finally record that action to another table (called counter-record) for tracking purposes
+// So that we can be sure that which ticket is served(also by which counter) and which ticket is still in the queue
 
 app.get(
   "/tickets/serve/:counterId",

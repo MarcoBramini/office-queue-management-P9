@@ -19,6 +19,8 @@ exports.getTicketsByServiceType = async (serviceTypeId) => {
     .toArray();
 };
 
+// CALL FOR TICKET OPERATIONS
+
 exports.changeTicketAsServed = async (ticketId) => {
   var newvalue = { $set: { status: "served" } };
   db.collection("tickets").updateOne(
