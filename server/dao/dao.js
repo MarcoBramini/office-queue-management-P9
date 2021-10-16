@@ -20,7 +20,7 @@ exports.getTicketsByServiceType = async (serviceTypeId) => {
 };
 
 
-exports.insertServiceType = async( servicetype) =>{
+exports.insertServiceType = async(servicetype) =>{
   return await db
   .collection("service-types")
   .insertOne({
@@ -29,4 +29,17 @@ exports.insertServiceType = async( servicetype) =>{
     avgServingTime: servicetype.avgServingTime,
     ticketLabel: servicetype.ticketLabel
   })
-}
+};
+
+exports.getServiceType = async (serviceTypeId) => {
+  return await db
+    .collection("service-types")
+    .findOne({ id: serviceTypeId });
+};
+
+exports.getAllServiceTypes= async (serviceTypeId) => {
+  return await db
+    .collection("service-types")
+    .find()
+    .toArray();
+};

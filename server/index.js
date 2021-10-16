@@ -3,7 +3,7 @@ const { param } = require("express-validator");
 const path = require("path");
 const cors = require("cors");
 
-const { getTicketsByServiceType } = require("./dao/dao");
+const { getTicketsByServiceType, insertServiceType, getServiceType, getAllServiceTypes } = require("./dao/dao");
 
 const port = process.env.PORT || 3001;
 
@@ -31,17 +31,38 @@ app.get(
 
 
 //post new serviceType:
-app.post( "/serviceTypes",  (req, res) => {
-    const serviceType = req.body;
-    insertServiceType(serviceType)
-      .then((written) => {
-        res.send(written);
+app.post("/serviceTypes", (req, res) => {
+  const serviceType = req.body;
+  insertServiceType(serviceType)
+    .then(control=>res.send(control))
+    .catch((err) =>
+      console.error("error writing data in the database: " + err)
+    );
+}
+);
+
+//get serviceType
+app.get(
+  "/serviceTypes/:serviceTypeId",
+  param("serviceTypeId").isString(),
+  (req, res) => {
+    const serviceTypeId = req.params.serviceTypeId;
+    getServiceType(serviceTypeId)
+      .then((servicetype) => {
+        res.send(servicetype);
       })
       .catch((err) =>
-        console.error("error writing data in the database: " + err)
+        console.error("error reading data from database: " + err)
       );
   }
 );
+
+app.get("/serviceTypes", (req, res) => {
+  getAllServiceTypes()
+    .then(servicetypes => res.send(servicetypes))
+    .catch((err) =>
+      console.error("error reading data from database: " + err));
+});
 
 app.listen(port, () => {
   console.log(`Server listening at :${port}`);

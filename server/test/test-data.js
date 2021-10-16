@@ -14,7 +14,13 @@ exports.ticketsCollection = {
 };
 
 exports.serviceTypesCollection = {
-  "service-types" : [
-    {},
+  "service-types": [
+    {
+      _id: "61684953a4c9082c6e8dd74a",
+      id: "bills-payment",
+      counterIDs: ["1", "3", "7"],
+      avgServingTime: 30,
+      ticketLabel: "A"
+    },
   ],
 };
