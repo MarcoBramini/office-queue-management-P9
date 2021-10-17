@@ -1,10 +1,11 @@
 const express = require("express");
-<<<<<<< HEAD
 const morgan = require('morgan'); // middleware di logging
 const passport = require('passport'); // middleware di autenticazione 
 const LocalStrategy = require('passport-local').Strategy; // username e password per il login
 const session = require('express-session'); // abilita le sessioni
 const cors = require("cors");
+const { param } = require("express-validator");
+const path = require("path");
 const { getTicketsByServiceType, getUser, getUserById } = require("./dao/dao");
 
 /*** impostiamo Passport ***/
@@ -38,12 +39,13 @@ passport.deserializeUser((id, done) => {
 
 // inizializziamo express
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 // impostiamo i middleware
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use("/", express.static(path.resolve(__dirname, "../client/build")));
 
 // middleware creato da noi: controlla se una data richiesta proviene da un utente autenticato
 const isLoggedIn = (req, res, next) => {
@@ -120,25 +122,6 @@ app.get("/tickets/next", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
-=======
-const { param } = require("express-validator");
-const path = require("path");
-const cors = require("cors");
-
-const { getTicketsByServiceType } = require("./dao/dao");
-
-const port = process.env.PORT || 3001;
-
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-app.use("/", express.static(path.resolve(__dirname, "../client/build")));
-
 app.get(
   "/tickets/:serviceTypeId",
   param("serviceTypeId").isString(),
@@ -160,4 +143,3 @@ app.listen(port, () => {
 
 // Export main app for testing
 module.exports = app;
->>>>>>> main
