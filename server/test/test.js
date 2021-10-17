@@ -23,15 +23,18 @@ after(() => {
 });
 
 
-const { getTicketsByID, getServedTicketsByIdOnCounterDB, } = require("../dao/dao.js");
 
 // Call Ticket API tests
 describe("Call ticket Apis testing:", () => {
 
   describe("GET /tickets/serve/1", () => {
-    
+
     describe("There is a service with a longer queue than the other", () => {
-      beforeEach(() => mongoUnit.load(testData.ticketsCollection));
+      beforeEach(() => {
+        mongoUnit.load(testData.ticketsCollection);
+        mongoUnit.load(testData.serviceTypeCollection);
+        mongoUnit.load(testData.counterRecordCollection);
+      });
 
       afterEach(() => mongoUnit.drop());
       it("it should get the ticket from the longest queue served by counter 1", (done) => {
@@ -56,9 +59,9 @@ describe("Call ticket Apis testing:", () => {
         chai
           .request(server)
           .get("/tickets/serve/1")
-          .end((err, res) => {
-            const toCheck = getTicketsByID("68914914a4c9082c6e8dd746");
-            expect(toCheck.status).to.be.equal("served")
+          .end(async () => {
+            const toCheck = await server.getTicketsByID("68914914a4c9082c6e8dd746");
+            expect(toCheck.status).to.be.equal("served", toCheck.status);
             done();
           });
       });
@@ -68,10 +71,10 @@ describe("Call ticket Apis testing:", () => {
         chai
           .request(server)
           .get("/tickets/serve/1")
-          .end((err, res) => {
+          .end(async (err, res) => {
             expect(err).to.be.null;
             expect(res.status).to.be.equal(200);
-            const toCheck = getServedTicketsByIdOnCounterDB("68914914a4c9082c6e8dd746");
+            const toCheck = await server.getServedTicketsByIdOnCounterDB("68914914a4c9082c6e8dd746");
             expect(toCheck).to.be.not.null;
             expect(toCheck.ticketNumber).to.be.equal("B01");
             expect(toCheck.counterId).to.be.equal("1");
@@ -82,8 +85,11 @@ describe("Call ticket Apis testing:", () => {
     });
 
     describe("There are 2 services with the same queue", () => {
-      beforeEach(() => mongoUnit.load(testData.ticketsCollection_sameLength));
-
+      beforeEach(() => {
+        mongoUnit.load(testData.ticketsCollection_sameLength);
+        mongoUnit.load(testData.serviceTypeCollection);
+        mongoUnit.load(testData.counterRecordCollection);
+      });
       afterEach(() => mongoUnit.drop());
       it("it should get the ticket from the longest queue served by counter 1", (done) => {
 
@@ -107,8 +113,8 @@ describe("Call ticket Apis testing:", () => {
         chai
           .request(server)
           .get("/tickets/serve/1")
-          .end((err, res) => {
-            const toCheck = getTicketsByID("92914914a4d9082c6e8dd746");
+          .end(async (err, res) => {
+            const toCheck = await server.getTicketsByID("92914914a4d9082c6e8dd746");
             expect(toCheck.status).to.be.equal("served")
             done();
           });
@@ -119,10 +125,10 @@ describe("Call ticket Apis testing:", () => {
         chai
           .request(server)
           .get("/tickets/serve/1")
-          .end((err, res) => {
+          .end(async (err, res) => {
             expect(err).to.be.null;
             expect(res.status).to.be.equal(200);
-            const toCheck = getServedTicketsByIdOnCounterDB("92914914a4d9082c6e8dd746");
+            const toCheck = await server.getServedTicketsByIdOnCounterDB("92914914a4d9082c6e8dd746");
             expect(toCheck).to.be.not.null;
             expect(toCheck.ticketNumber).to.be.equal("C01");
             expect(toCheck.counterId).to.be.equal("1");

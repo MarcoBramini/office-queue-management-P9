@@ -109,21 +109,21 @@ exports.ticketsCollection_sameLength = {
 exports.serviceTypeCollection = {
   "service-types": [
     {
-      _id: "616c260c60a84e0e3f5d5e16",
+      _id: "1",
       id: "Test",
       counterIDs: [1],
       avgServingTime: "12",
       ticketLabel: "B"
     },
     {
-      _id: "616c260c60a84e0e3f5d5e16",
+      _id: "2",
       id: "Testing-stuff",
       counterIDs: [1],
       avgServingTime: "10",
       ticketLabel: "C"
     },
     {
-      _id: "616c260c60a84e0e3f5d5e16",
+      _id: "3",
       id: "bills-payment",
       counterIDs: [1],
       avgServingTime: "10",
@@ -131,5 +131,11 @@ exports.serviceTypeCollection = {
     },
   ],
 
+};
+
+exports.counterRecordCollection={
+  "counter-record":[
+
+  ],
 };
 
