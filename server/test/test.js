@@ -22,25 +22,25 @@ after(() => {
   return mongoUnit.stop();
 });
 
-// Tickets APIs tests
-describe("Start Tickets APIs testing:", () => {
+// Call Ticket API tests
+
+describe("Call ticket Apis testing:", () => {
   beforeEach(() => mongoUnit.load(testData.ticketsCollection));
 
   afterEach(() => mongoUnit.drop());
 
-  describe("GET /tickets/bills-payment", () => {
-    it("it should retrieve all the tickets associated to the given serviceTypeId", (done) => {
+  describe("GET /tickets/serve/1", () => {
+    it("it should get the latest ticket for counter 1 and changed its status to served", (done) => {
       chai
         .request(server)
-        .get("/tickets/bills-payment")
+        .get("/tickets/serve/1")
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res.status).to.be.equal(200);
-          expect(res.body.length).to.be.equal(1);
-          expect(res.body).to.be.an("array");
-          expect(res.body.map((t) => t.serviceTypeId)).to.include.members([
-            "bills-payment",
-          ]);
+          expect(res.body).to.have.property("status");
+          expect(res.body).to.have.property("number");
+          expect(res.body).to.have.property("serviceTypeId");
+          expect(res.body.status).to.be.equal("waiting");
 
           done();
         });
