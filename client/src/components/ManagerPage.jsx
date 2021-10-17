@@ -15,14 +15,17 @@ export default function ManagerPage() {
   };
 
   useEffect(() => {
+    setNewService((prevSelected) => {
+      prevSelected.counterIDs = [...counters];
+      return prevSelected;
+    });
+  }, [counters]);
+
+  useEffect(() => {
     API.getServicesTypes().then((newS) => {
       setServices(newS);
     });
   }, [services]);
-
-  useEffect(() => {
-    setNewService({ ...newService, counterIDs: [...counters] });
-  }, [counters]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
