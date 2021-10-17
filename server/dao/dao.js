@@ -48,3 +48,16 @@ exports.recordServeAction = async (ticketId, counterId) => {
 exports.getLatestTicketFromCounter = async (counterId) => {
   return await db.collection("tickets").find({ status: "waiting" }).toArray();
 };
+
+
+exports.getTicketsByID = async (id) => {
+  return await db
+    .collection("tickets")
+    .findOne({ _id: id })
+};
+
+exports.getServedTicketsByIdOnCounterDB = async (id) => {
+  return await db
+    .collection("counter-record")
+    .findOne({ _id: id })
+};
