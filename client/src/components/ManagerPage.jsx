@@ -20,10 +20,6 @@ export default function ManagerPage() {
     });
   }, [services]);
 
-  useEffect(() => {
-    setNewService({ ...newService, counterIDs: [...counters] });
-  }, [counters]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
