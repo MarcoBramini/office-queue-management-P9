@@ -18,3 +18,14 @@ exports.getTicketsByServiceType = async (serviceTypeId) => {
     .find({ serviceTypeId: serviceTypeId })
     .toArray();
 };
+
+exports.updateTicketCounter = async (ticketId, counterId) => {
+  return await db
+    .collection("tickets")
+    .updateOne({ _id: ticketId }, { $set: { counterId, counterId } });
+};
+
+exports.getTicketById = async (ticketId) => {
+  console.log(process.env.MONGO_CONN_STR);
+  return await db.collection("tickets").findOne({ _id: ticketId });
+};

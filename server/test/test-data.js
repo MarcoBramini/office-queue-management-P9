@@ -12,3 +12,12 @@ exports.ticketsCollection = {
     },
   ],
 };
+
+exports.usersCollection = {
+  users: [
+    {
+      _id: "1",
+      name: "Mario",
+    },
+  ],
+};

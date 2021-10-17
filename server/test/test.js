@@ -14,6 +14,7 @@ let testData = require("./test-data");
 
 mongoUnit.start({ dbName: "office-queue-management" }).then(() => {
   process.env.MONGO_CONN_STR = mongoUnit.getUrl();
+
   server = require("..");
   run();
 });
@@ -27,6 +28,25 @@ describe("Start Tickets APIs testing:", () => {
   beforeEach(() => mongoUnit.load(testData.ticketsCollection));
 
   afterEach(() => mongoUnit.drop());
+
+  describe("updateTicketCounterID", () => {
+    it("it should update the counterID for a ticket", (done) => {
+      chai
+        .request(server)
+        .post("/tickets/56d9bf92f9be48771d6fe5b1")
+        .send({ counterId: "ajeje" })
+        .end(async (err, res) => {
+          expect(res.status).to.be.equal(200);
+
+          const updatedTicket = await server.getTicketById(
+            "56d9bf92f9be48771d6fe5b1"
+          );
+          console.log(updatedTicket);
+          expect(updatedTicket.counterId).to.be.equal("ajeje");
+          done();
+        });
+    });
+  });
 
   describe("GET /tickets/bills-payment", () => {
     it("it should retrieve all the tickets associated to the given serviceTypeId", (done) => {
