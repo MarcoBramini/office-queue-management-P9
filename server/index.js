@@ -47,6 +47,7 @@ app.get(
     getLatestTicketFromCounter(counterId)
       .then((tickets) => {
         var latestTicket = tickets[0];
+        console.log(tickets+ " counterID " + counterId);
         changeTicketAsServed(latestTicket.number);
         recordServeAction(latestTicket.number, counterId);
         //res.send(latestTicket);

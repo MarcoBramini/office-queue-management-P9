@@ -4,7 +4,7 @@ exports.ticketsCollection = {
       _id: "56d9bf92f9be48771d6fe5b1",
       number: "A01",
       serviceTypeId: "bills-payment",
-      status: "served",
+      status: "waiting",
     },
     {
       _id: "56d9bf92f9be48771d6fe5b2",
