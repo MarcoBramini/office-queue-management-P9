@@ -19,27 +19,19 @@ exports.getTicketsByServiceType = async (serviceTypeId) => {
     .toArray();
 };
 
-
-exports.insertServiceType = async(servicetype) =>{
-  return await db
-  .collection("service-types")
-  .insertOne({
+exports.insertServiceType = async (servicetype) => {
+  return await db.collection("service-types").insertOne({
     id: servicetype.id,
     counterIDs: [...servicetype.counterIDs],
     avgServingTime: servicetype.avgServingTime,
-    ticketLabel: servicetype.ticketLabel
-  })
+    ticketLabel: servicetype.ticketLabel,
+  });
 };
 
 exports.getServiceType = async (serviceTypeId) => {
-  return await db
-    .collection("service-types")
-    .findOne({ id: serviceTypeId });
+  return await db.collection("service-types").findOne({ id: serviceTypeId });
 };
 
-exports.getAllServiceTypes= async (serviceTypeId) => {
-  return await db
-    .collection("service-types")
-    .find()
-    .toArray();
+exports.getAllServiceTypes = async (serviceTypeId) => {
+  return await db.collection("service-types").find().toArray();
 };

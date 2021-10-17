@@ -1,4 +1,5 @@
 const { assert } = require("chai");
+
 let chai = require("chai");
 let expect = chai.expect;
 let chaiHttp = require("chai-http");
@@ -49,7 +50,6 @@ describe("Start Tickets APIs testing:", () => {
   });
 });
 
-
 // ServiceType APIs tests
 describe("Start ServiceTypes APIs testing:", () => {
   before(() => mongoUnit.load(testData.serviceTypesCollection));
@@ -60,7 +60,7 @@ describe("Start ServiceTypes APIs testing:", () => {
     id: "Boringstuff",
     counterIDs: ["2", "4", "6"],
     avgServingTime: 15,
-    ticketLabel: "B"
+    ticketLabel: "B",
   };
 
   describe("POST /serviceTypes", () => {
@@ -79,21 +79,21 @@ describe("Start ServiceTypes APIs testing:", () => {
         });
     });
 
-    it("The written record should be equal", (done) =>{
-       chai
-       .request(server)
-       .get("/serviceTypes/" + testService.id)
-       .end((err, res) => {
-         expect(err).to.be.null;
-         expect(res.status).to.be.equal(200);
-         expect(res.body).to.be.an("object");
-         expect(res.body.id).to.be.equal("Boringstuff");
-         expect(res.body.avgServingTime).to.be.equal(15);
-         expect(res.body.ticketLabel).to.be.equal("B");
-         expect(res.body.counterIDs).to.have.members(["2", "4", "6"]);
-         done();
-       });
-    })
+    it("The written record should be equal", (done) => {
+      chai
+        .request(server)
+        .get("/serviceTypes/" + testService.id)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an("object");
+          expect(res.body.id).to.be.equal("Boringstuff");
+          expect(res.body.avgServingTime).to.be.equal(15);
+          expect(res.body.ticketLabel).to.be.equal("B");
+          expect(res.body.counterIDs).to.have.members(["2", "4", "6"]);
+          done();
+        });
+    });
   });
 
   describe("GET /serviceTypes/:servicetypeId", () => {
@@ -114,4 +114,3 @@ describe("Start ServiceTypes APIs testing:", () => {
     });
   });
 });
-

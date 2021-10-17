@@ -20,7 +20,7 @@ exports.serviceTypesCollection = {
       id: "bills-payment",
       counterIDs: ["1", "3", "7"],
       avgServingTime: 30,
-      ticketLabel: "A"
+      ticketLabel: "A",
     },
   ],
 };
