@@ -47,3 +47,68 @@ describe("Start Tickets APIs testing:", () => {
     });
   });
 });
+
+// ServiceType APIs tests
+describe("Start ServiceTypes APIs testing:", () => {
+  before(() => mongoUnit.load(testData.serviceTypesCollection));
+
+  after(() => mongoUnit.drop());
+
+  const testService = {
+    id: "Boringstuff",
+    counterIDs: ["2", "4", "6"],
+    avgServingTime: 15,
+    ticketLabel: "B",
+  };
+
+  describe("POST /serviceTypes", () => {
+    it("it should write the service type to the database ", (done) => {
+      //check if Something was written on the DB
+      chai
+        .request(server)
+        .post("/serviceTypes")
+        .send(testService)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an("object", res.body);
+          expect(res.body.acknowledged).to.be.equal(true);
+          done();
+        });
+    });
+
+    it("The written record should be equal", (done) => {
+      chai
+        .request(server)
+        .get("/serviceTypes/" + testService.id)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an("object");
+          expect(res.body.id).to.be.equal("Boringstuff");
+          expect(res.body.avgServingTime).to.be.equal(15);
+          expect(res.body.ticketLabel).to.be.equal("B");
+          expect(res.body.counterIDs).to.have.members(["2", "4", "6"]);
+          done();
+        });
+    });
+  });
+
+  describe("GET /serviceTypes/:servicetypeId", () => {
+    it("it should retrieve the service type associated to the given serviceTypeId", (done) => {
+      chai
+        .request(server)
+        .get("/serviceTypes/bills-payment")
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an("object");
+          expect(res.body.id).to.be.equal("bills-payment");
+          expect(res.body.avgServingTime).to.be.equal(30);
+          expect(res.body.ticketLabel).to.be.equal("A");
+          expect(res.body.counterIDs).to.have.members(["1", "3", "7"]);
+          done();
+        });
+    });
+  });
+});
