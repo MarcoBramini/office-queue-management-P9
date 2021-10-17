@@ -1,3 +1,4 @@
+
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import LoginForm from './components/LoginComponent';
@@ -5,6 +6,7 @@ import { MyNavBar } from './components/NavBarComponent';
 import { Container, Row, Col, Alert, Button, Spinner } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import API from './API';
+
 
 function App() {
   const [ticket, setTicket] = useState({});
@@ -25,7 +27,7 @@ function App() {
     }
     catch (err) {
       //handleErrors(err)
-      console.log("APPJSERROR "+err);
+      console.log("APPJSERROR " + err);
       throw err;
     }
   }
@@ -42,10 +44,9 @@ function App() {
     //setLoading(true);
   }
 
-
   function onButtonClick() {
     setIsLoading(true);
-    fetch("http://localhost:3001/tickets/next")
+    fetch("/tickets/bills-payment")
       .then((response) => {
         response.json().then((data) => setTicket(data[0]));
       })
@@ -85,7 +86,7 @@ function App() {
               {loggedIn && user.role == 'admin' ? <h1 className="d-flex justify-content-center">Admin Page</h1> : ''}
 
               {loggedIn && user.role == 'manager' ? <h1 className="d-flex justify-content-center">Manager Page</h1> : ''}
-              
+
               {loggedIn ? '' : <h1 className="d-flex justify-content-center">User Page</h1>}
             </Row>
 

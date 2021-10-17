@@ -3,9 +3,7 @@
 const { MongoClient } = require("mongodb");
 const bcrypt = require('bcrypt');
 
-const mongo_uri =
-  "mongodb+srv://test:test@office-queue-management.n5k3k.mongodb.net/test";
-const client = new MongoClient(mongo_uri);
+const client = new MongoClient(process.env.MONGO_CONN_STR);
 
 const db = client.db("office-queue-management");
 
