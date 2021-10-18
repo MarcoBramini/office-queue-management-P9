@@ -33,7 +33,6 @@ export default function OfficerPage() {
           setWarning("");
           setMessage("There are no tickets to serve");
         }
-
       });
     }
   };
