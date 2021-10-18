@@ -13,6 +13,7 @@ async function logIn(credentials) {
       body: JSON.stringify(credentials),
     });
     if (response.ok) {
+      console.log("STATUS: "+response.status);
       const user = await response.json();
       return user;
     }
@@ -36,9 +37,13 @@ async function logIn(credentials) {
   async function getUserInfo() {
     const response = await fetch(BASEURL + '/sessions/current');
     const userInfo = await response.json();
+    console.log(userInfo);
     if (response.ok) {
+      console.log("THATS OK")
+      console.log(userInfo);
       return userInfo;
     } else {
+      console.log("NOT OK");
       throw userInfo;  // un oggetto che contiene l'errore proveniente dal server 
     }
   }

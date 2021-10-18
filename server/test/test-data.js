@@ -12,3 +12,20 @@ exports.ticketsCollection = {
     },
   ],
 };
+
+exports.credentials = {
+  username: "username01",
+  password: "password01"
+}
+
+exports.user = {
+  users: [
+    {
+      _id: "fasfasfa",
+      role: "offcier",
+      username: "username01",
+      password: "$2a$10$4ZYbBh5CPYqkEbHIi8uVDuqrBTWtc333gvARP3t4Lq7IuTxVs3QTS",
+      id: 2
+    }
+  ]
+}

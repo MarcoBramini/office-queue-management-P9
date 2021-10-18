@@ -21,10 +21,26 @@ passport.use(new LocalStrategy(
   }
 ));
 
+// inizializziamo express
+const app = express();
+const port = process.env.PORT || 3001;
+
+// impostiamo la sessione
+app.use(session({
+  // di default, Passport usa una MemoryStore per tener traccia delle sessioni 
+  secret: 'P09 best group',
+  resave: false,
+  saveUninitialized: false
+}));
+
+// dopodichè, inizializziamo passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // serializziamo e de-serializziamo l'utente (oggetto utente <-> sessione)
 // serializziamo l'id dell'utente e lo salviamo nella sessione: la sessione in questo modo è molto piccola
 passport.serializeUser((user, done) => {
-  done(null, user.username);
+  done(null, user.id);
 });
 
 // partendo dai dati nella sessione, estraiamo l'utente corrente (loggato) 
@@ -36,10 +52,6 @@ passport.deserializeUser((id, done) => {
       done(err, null);
     });
 });
-
-// inizializziamo express
-const app = express();
-const port = process.env.PORT || 3001;
 
 // impostiamo i middleware
 app.use(cors());
@@ -53,18 +65,6 @@ const isLoggedIn = (req, res, next) => {
     return next();
   return res.status(401).json({ error: 'not authenticated' });
 }
-
-// impostiamo la sessione
-app.use(session({
-  // di default, Passport usa una MemoryStore per tener traccia delle sessioni 
-  secret: 'P09 best group',
-  resave: false,
-  saveUninitialized: false
-}));
-
-// dopodichè, inizializziamo passport
-app.use(passport.initialize());
-app.use(passport.session());
 
 // DELETE /sessions/current 
 // logout
@@ -100,8 +100,10 @@ app.get('/api/sessions/current', (req, res) => {
   if (req.isAuthenticated()) {
     res.status(200).json(req.user);
   }
-  else
-    res.status(401).json({ error: 'Unauthenticated user!' });;
+  else{
+    res.status(401).json({ error: 'Unauthenticated user!' });
+  }
+    
 });
 
 // GET /api/users/:id

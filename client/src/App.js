@@ -14,6 +14,27 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  
+  const isAuthenticated = async () => {
+    try{
+      let user = await API.getUserInfo();
+      setUser(user);   
+      setLoggedIn(true);
+      //TODO load any useful info for the authenticated user (admin, officer, manager)
+    }
+    catch(err){
+      console.log(err);
+      throw err;
+    }
+  }
+
+  //useEffect to manage refresh page data persistence
+  useEffect(() => {
+    isAuthenticated();
+  }, [loggedIn])
+
+   //TODO implement another userEffect to load clients info to be displayed
+
 
   // login utente, si appoggia sull'apposita API che restituisce l'id dell'utente loggato 
   // le variabili di stato dirty e message vengono "pulite"
