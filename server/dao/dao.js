@@ -3,9 +3,7 @@
 const { MongoClient } = require("mongodb");
 const bcrypt = require('bcrypt');
 
-const mongo_uri =
-  "mongodb+srv://test:test@office-queue-management.n5k3k.mongodb.net/test";
-const client = new MongoClient(mongo_uri);
+const client = new MongoClient(process.env.MONGO_CONN_STR);
 
 const db = client.db("office-queue-management");
 
@@ -14,6 +12,7 @@ client.connect((err, result) => {
     console.error("error during connection to database: " + err);
   }
 });
+
 
 exports.getTicketsByServiceType = async (serviceTypeId) => {
   return await db

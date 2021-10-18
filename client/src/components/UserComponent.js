@@ -10,7 +10,7 @@ function UserPage(props) {
     let serviceTypes = ['PO box service', 'GPO box service', 'Free Post service', 'Post Bag service', 'e-Post service']
 
     const getTicket = (event) => {
-        setErrorMessage("You have a ticket for '" + serviceTypes[serviceID] + "' with this number " + Math.floor(Math.random() * (100 - 0 + 1) + 0));
+        setErrorMessage("You have a ticket for '" + serviceTypes[serviceID] + "' with this number " + Math.floor(Math.random() * (100 - 0 + 1) + 0)+", new ticket in the list on the left");
         setShow(false);
     };
     const handlerServiceChanged = (event) => {
