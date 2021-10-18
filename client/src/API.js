@@ -1,5 +1,13 @@
 const url = "http://localhost:3001/";
 
+async function callNextTicket(counterId) {
+  const response = await fetch(url + "tickets/serve/" + counterId);
+
+  const ticket = await response.json();
+
+  return ticket;
+}
+
 async function postNewServiceType(newService) {
   const response = await fetch(url + "serviceTypes", {
     method: "POST",
@@ -21,5 +29,6 @@ async function getServicesTypes() {
 const API = {
   postNewServiceType,
   getServicesTypes,
+  callNextTicket,
 };
 export default API;

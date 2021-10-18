@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Alert, Button, Spinner } from "react-bootstrap";
 
+import { Container, Row, Col, Alert, Button, Spinner } from "react-bootstrap";
+import OfficerPage from "./components/OfficerPage";
 import ManagerPage from "./components/ManagerPage";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
   return (
     <>
       {" "}
+       <OfficerPage />
       <ManagerPage />
       <Container>
         <Row className="vh-100 justify-content-center align-items-center">
@@ -37,6 +39,7 @@ function App() {
           </Col>
         </Row>
       </Container>
+
     </>
   );
 }
