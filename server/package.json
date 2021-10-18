@@ -27,8 +27,5 @@
   },
   "devDependencies": {
     "mongo-unit": "^2.0.1"
-  },
-  "directories": {
-    "test": "test"
   }
 }
