@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+
 import { Container, Row, Col, Alert, Button, Spinner } from "react-bootstrap";
+import OfficerPage from "./components/OfficerPage";
+import ManagerPage from "./components/ManagerPage";
 
 function App() {
   const [ticket, setTicket] = useState({});
@@ -17,21 +20,27 @@ function App() {
   }
 
   return (
-    <Container>
-      <Row className='vh-100 justify-content-center align-items-center'>
-        <Col className='d-flex justify-content-center align-items-center flex-column'>
-          {isLoading ? (
-            <Spinner animation='border' variant='primary' />
-          ) : (
-            <>
-              <Button onClick={onButtonClick}>Call next ticket!</Button>
-              <h1>{ticket.number}</h1>
-              {error ? <Alert>{error}</Alert> : null}
-            </>
-          )}
-        </Col>
-      </Row>
-    </Container>
+    <>
+      {" "}
+       <OfficerPage />
+      <ManagerPage />
+      <Container>
+        <Row className="vh-100 justify-content-center align-items-center">
+          <Col className="d-flex justify-content-center align-items-center flex-column">
+            {isLoading ? (
+              <Spinner animation="border" variant="primary" />
+            ) : (
+              <>
+                <Button onClick={onButtonClick}>Call next ticket!</Button>
+                <h1>{ticket.number}</h1>
+                {error ? <Alert>{error}</Alert> : null}
+              </>
+            )}
+          </Col>
+        </Row>
+      </Container>
+
+    </>
   );
 }
 
