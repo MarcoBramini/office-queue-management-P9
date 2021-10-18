@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import LoginForm from './components/LoginComponent';
 import { MyNavBar } from './components/NavBarComponent';
 import { UserPage } from './components/UserComponent';
@@ -66,7 +66,7 @@ function App() {
           <Route exact path="/">
 
             <Row>
-              {loggedIn && user.role == 'officer' ?
+              {loggedIn && user.role === 'officer' ?
                 <div>
                   <OfficerPage />
                   <Container>
@@ -86,11 +86,11 @@ function App() {
                   </Container>
                 </div> : ''}
 
-              {loggedIn && user.role == 'admin' ? <ManagerPage />: ''}
+              {loggedIn && user.role === 'admin' ? <ManagerPage />: ''}
 
-              {loggedIn && user.role == 'manager' ?  <h1 className="d-flex justify-content-center">Manager Page</h1>  : ''}
+              {loggedIn && user.role === 'manager' ?  <h1 className="d-flex justify-content-center">Manager Page</h1>  : ''}
 
-              {loggedIn == false ? <UserPage /> : ''}
+              {loggedIn === false ? <UserPage /> : ''}
             </Row>
 
           </Route>

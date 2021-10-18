@@ -3,9 +3,7 @@ import { Card, Button, Row } from "react-bootstrap";
 
 
 class Ticket extends React.Component{
-    constructor(props){
-        super(props);
-    }
+    
 
     clickEventHandler = function(){
         alert('ticket action placeholder (example, delete ticket reservation)');

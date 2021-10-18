@@ -1,12 +1,10 @@
 import React from 'react';
-import { Container, ListGroup, Col, Row } from "react-bootstrap";
+import { Container, ListGroup, Col } from "react-bootstrap";
 import Ticket from './TicketComponent';
 
 
 class TicketList extends React.Component{
-    constructor(props){
-        super(props);
-    }
+   
 
     selectTickets = ()=>{
       let tickets = this.props.activeTickets;

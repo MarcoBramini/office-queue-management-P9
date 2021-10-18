@@ -1,5 +1,5 @@
 import './UserComponentCSS.css';
-import { Form, Button, Container, Alert, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { React, useState } from 'react';
 import TicketPage from './TicketPageComponent';
 
@@ -26,7 +26,7 @@ function UserPage(props) {
                 <Col>
                     <div className=" my-5 d-flex justify-content-center align-items-center flex-column">
                         {!show ? <Button className="mb-3" onClick={() => { setShow(true); setErrorMessage('') }}>Get a ticket!</Button> : <Button className="mb-3" disabled>Get a ticket!</Button>}
-                        {errorMessage != '' ? <p>{errorMessage}</p> : ''}
+                        {errorMessage !== '' ? <p>{errorMessage}</p> : ''}
 
                         {show ?
                             <Container fluid >
