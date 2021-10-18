@@ -54,7 +54,7 @@ exports.getLatestTicketFromCounter = async (counterId) => {
 
   //save in count the length of the queue for each service type that our counter can serve
   const count = await db.collection("tickets").aggregate([
-    { $match: { serviceTypeId: { $in: string_possiblesServices } } },
+    { $match: { serviceTypeId: { $in: string_possiblesServices }, status: "waiting" } },
     { $group: { _id: "$serviceTypeId", count: { $sum: 1 } } }
   ]).toArray();
 

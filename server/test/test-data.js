@@ -72,7 +72,7 @@ exports.ticketsCollection_sameLength = {
       number: "B03",
       issuedAt: "2021-10-15T17:00:00.000Z",
       serviceTypeId: "Test",
-      status: "served",
+      status: "waiting",
     },
     {
       _id: "18914914a4c9082c6e8dd745",
