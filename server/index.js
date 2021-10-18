@@ -18,6 +18,8 @@ const {
   insertServiceType,
   getServiceType,
   getAllServiceTypes,
+  addNewTicket,
+  getLastNumberEjectedForServiceTypeToday,
   resetWaitingTickets,
   getAllTickets,
 } = require("./dao/dao");
@@ -65,6 +67,7 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
+
 app.use("/", express.static(path.resolve(__dirname, "../client/build")));
 
 // middleware creato da noi: controlla se una data richiesta proviene da un utente autenticato
@@ -153,6 +156,41 @@ app.get(
       );
   }
 );
+
+async function generateTicketNumber(serviceTypeId){
+  let ticketNumber;
+  //From service_type to label (service type letter)
+  await getServiceType(serviceTypeId).then((serviceType)=>{
+    ticketNumber = serviceType.ticketLabel;
+  }).catch((err)=>{
+    console.error(err);
+    ticketNumber = null;
+  })
+
+  //from service type to today max number + join strings
+  return await getLastNumberEjectedForServiceTypeToday(serviceTypeId).then(maxNumber=>{
+    maxNumber++;
+    let formattedNumber = ("0" + maxNumber).slice(-2);//to have number on 2 digits
+    ticketNumber = ticketNumber + "" + formattedNumber;
+    return ticketNumber;
+  }).catch(err=>{
+    console.error(err);
+  })
+}
+
+//Create new ticket
+app.post("/tickets", (req, res)=>{
+  let serviceType = req.body.serviceType;
+  generateTicketNumber(serviceType).then(ticketNumber=>{//if ticket number generated correctly...
+    addNewTicket(ticketNumber, serviceType).then((newTicket)=>{//create new ticket with the number
+      res.send(newTicket);//return ticket to client
+    }).catch((err)=>{
+      console.error(err);
+    });
+  }).catch(err=>{
+    console.error(err);
+  }); 
+});
 
 app.get("/serviceTypes", (req, res) => {
   getAllServiceTypes()

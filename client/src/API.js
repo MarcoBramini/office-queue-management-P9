@@ -65,7 +65,40 @@ async function getServicesTypes() {
   return services;
 }
 
+function getJson(httpResponsePromise) {
+  return new Promise((resolve, reject) => {
+    httpResponsePromise
+      .then((response) => {
+        if (response.ok) {
+          response
+            .json()
+            .then((json) => resolve(json))
+            .catch((err) => reject({ error: "Cannot parse server response" }));
+        } else {
+          response
+            .json()
+            .then((obj) => reject(obj))
+            .catch((err) => reject({ error: "Cannot parse server response" }));
+        }
+      })
+      .catch((err) => reject({ error: "Cannot communicate" }));
+  });
+}
+
+async function addTicket(serviceType) {
+  return getJson(
+    fetch("/tickets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ serviceType: serviceType }),
+    })
+  );
+}
+
 const API = {
+  addTicket,
   logIn,
   logOut,
   getUserInfo,

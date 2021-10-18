@@ -53,6 +53,44 @@ exports.getUser = (username, password) => {
   });
 };
 
+exports.addNewTicket = async (ticketNumber, serviceTypeId) => {
+  let newTicket = {
+    number: ticketNumber,
+    issuedAt: dayjs().format('YYYY-MM-DDTHH:mm:ssZ[Z]'),
+    serviceTypeId: serviceTypeId,
+    status:"waiting"
+  }
+  await db
+  .collection("tickets")
+  .insertOne(newTicket);
+  return newTicket;
+}
+
+exports.getServiceType = async (serviceTypeId) => {
+  return await db
+  .collection("service-types")
+  .findOne({id: serviceTypeId});
+}
+
+//in today tickets,for a service, find the number of the latest ticket
+exports.getLastNumberEjectedForServiceTypeToday = async (serviceTypeId) => {
+  let now = dayjs().format('YYYY-MM-DD');
+  let myregex = "^"+now;
+
+  let youngerTicket_serviceType_today = await db
+  .collection("tickets")
+  .find({issuedAt:{$regex : myregex}, serviceTypeId: serviceTypeId})
+  .sort({issuedAt: -1})
+  .limit(1)
+  .toArray();
+  //console.log(youngerTicket_serviceType_today);
+
+  if(youngerTicket_serviceType_today.length==0)
+    return 0;
+
+  let number = youngerTicket_serviceType_today[0].number.substring(1);
+  return number;
+}
 // CALL FOR TICKET OPERATIONS
 
 exports.changeTicketAsServed = async (ticketId) => {
