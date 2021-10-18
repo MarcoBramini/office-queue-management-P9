@@ -23,7 +23,10 @@ export default function OfficerPage() {
           if (!ticket.error) {
             setCurrentTicket(ticket);
             console.log(ticket);
+
             setWarning("");
+            setMessage(currentTicket);
+            setMessage("");
             setMessage("You are serving Ticket number : " + ticket.number);
           } else {
             setMessage("");
