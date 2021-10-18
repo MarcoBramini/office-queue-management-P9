@@ -15,7 +15,7 @@ exports.ticketsCollection = {
     {
       _id: "24514914a4c9082c6e8dd746",
       number: "B03",
-      issuedAt: "2021-10-15T17:00:00.000Z",
+      issuedAt: "2021-10-15T17:15:00.000Z",
       serviceTypeId: "Test",
       status: "waiting",
     },
@@ -98,12 +98,17 @@ exports.ticketsCollection_sameLength = {
     {
       _id: "56d9bf92f9be48771d6fe5b2",
       number: "C03",
+      issuedAt: "2021-10-15T17:40:00.000Z",
       serviceTypeId: "Testing-stuff",
       status: "waiting",
     },
 
 
   ],
+};
+
+exports.ticketsCollection_Empty = {
+  tickets: [ ],
 };
 
 exports.serviceTypeCollection = {

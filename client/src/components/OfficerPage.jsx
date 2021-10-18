@@ -17,10 +17,23 @@ export default function OfficerPage() {
       setWarning("Please choose counter first!");
     } else {
       API.callNextTicket(counterId).then((ticket) => {
-        setCurrentTicket(ticket);
-        console.log(ticket);
-        setWarning("");
-        setMessage("You are serving Ticket number : " + ticket.number);
+        //ticket is null if there are no available tickets
+        if (ticket) {
+          //ticket has .error if there was an error in the backend part
+          if (!ticket.error) {
+            setCurrentTicket(ticket);
+            console.log(ticket);
+            setWarning("");
+            setMessage("You are serving Ticket number : " + ticket.number);
+          } else {
+            setMessage("");
+            setWarning("Error while reading the database");
+          }
+        } else {
+          setWarning("");
+          setMessage("There are no tickets to serve");
+        }
+
       });
     }
   };

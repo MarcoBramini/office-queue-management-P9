@@ -139,5 +139,29 @@ describe("Call ticket Apis testing:", () => {
 
     });
 
+    describe("There are no 'waiting' tickets", () => {
+      beforeEach(() => {
+        mongoUnit.load(testData.ticketsCollection_Empty);
+        mongoUnit.load(testData.serviceTypeCollection);
+        mongoUnit.load(testData.counterRecordCollection);
+      });
+
+      afterEach(() => mongoUnit.drop());
+      it("it should return null ", (done) => {
+
+        chai
+          .request(server)
+          .get("/tickets/serve/1")
+          .end((err, res) => {
+            expect(err).to.be.null;
+            expect(res.status).to.be.equal(200);
+            expect(res.body).to.be.null;
+            done();
+          });
+      });
+
+
+    }); 
+    
   });
 });

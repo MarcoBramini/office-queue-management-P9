@@ -49,15 +49,19 @@ app.get(
     const counterId = req.params.counterId;
     getLatestTicketFromCounter(counterId)
       .then((tickets) => {
-        const latestTicket = tickets[0];
-        console.log(latestTicket.number + " counterID " + counterId);
-        changeTicketAsServed(latestTicket.number);
-        recordServeAction(latestTicket.number, counterId);
-        //res.send(latestTicket);
-        res.json(latestTicket);
+        if (!tickets) {
+          //if tickets is null there was no avilable tickets so return null to the client
+          res.json(null);
+        } else {
+          const latestTicket = tickets[0];
+          console.log(latestTicket.number + " counterID " + counterId);
+          changeTicketAsServed(latestTicket._id);
+          recordServeAction(latestTicket.number, counterId);
+          res.json(latestTicket);
+        }
+
       })
-      .catch((err) =>
-        console.error("error reading data from database: " + err)
+      .catch((err) => res.status(501).json({ error: `Error reading data from database: ${err}` })
       );
   }
 );

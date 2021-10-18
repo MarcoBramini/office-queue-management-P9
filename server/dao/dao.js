@@ -24,7 +24,7 @@ exports.getTicketsByServiceType = async (serviceTypeId) => {
 exports.changeTicketAsServed = async (ticketId) => {
   var newvalue = { $set: { status: "served" } };
   db.collection("tickets").updateOne(
-    { number: ticketId },
+    { _id: ticketId },
     newvalue,
     function (err, res) {
       if (err) throw err;
@@ -58,6 +58,11 @@ exports.getLatestTicketFromCounter = async (counterId) => {
     { $group: { _id: "$serviceTypeId", count: { $sum: 1 } } }
   ]).toArray();
 
+  if(!count.length){
+    //if there are no avaiable tickets return null
+    return null;
+  }
+  
   //searching for the longest queue
   //indexmax is the position in the array count of where the max is, 
   //max is the max value of the queue & avgServingTime is the avgServingTime associated to the longest queue
@@ -90,7 +95,7 @@ exports.getLatestTicketFromCounter = async (counterId) => {
 
   });
 
-  return await db.collection("tickets").find({ status: "waiting", serviceTypeId: count[indexMax]._id }).sort({ number: 1 }).toArray();
+  return await db.collection("tickets").find({ status: "waiting", serviceTypeId: count[indexMax]._id }).sort({ issuedAt: 1 }).toArray();
 };
 
 //used for testing purposes
