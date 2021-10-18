@@ -1,7 +1,5 @@
-const url = "http://localhost:3001/";
-
 async function callNextTicket(counterId) {
-  const response = await fetch(url + "tickets/serve/" + counterId);
+  const response = await fetch("tickets/serve/" + counterId);
 
   const ticket = await response.json();
 
@@ -9,7 +7,7 @@ async function callNextTicket(counterId) {
 }
 
 async function postNewServiceType(newService) {
-  const response = await fetch(url + "serviceTypes", {
+  const response = await fetch("serviceTypes", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ ...newService }),
@@ -20,7 +18,7 @@ async function postNewServiceType(newService) {
 }
 
 async function getServicesTypes() {
-  const response = await fetch(url + "serviceTypes");
+  const response = await fetch("serviceTypes");
   const services = await response.json();
 
   return services;
