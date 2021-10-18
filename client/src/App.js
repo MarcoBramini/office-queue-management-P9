@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import LoginForm from "./components/LoginComponent";
 import { MyNavBar } from "./components/NavBarComponent";
-import { Container, Row, Col, Alert, Button, Spinner } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import {
   BrowserRouter as Router,
   Route,
@@ -15,9 +15,6 @@ import ManagerPage from "./components/ManagerPage";
 import API from "./API";
 
 function App() {
-  const [ticket, setTicket] = useState({});
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -68,16 +65,6 @@ function App() {
     //setLoading(true);
   };
 
-  function onButtonClick() {
-    setIsLoading(true);
-    fetch("/tickets/bills-payment")
-      .then((response) => {
-        response.json().then((data) => setTicket(data[0]));
-      })
-      .catch((err) => setError(err))
-      .finally(() => setIsLoading(false));
-  }
-
   return (
     <Router>
       <Container fluid className='App'>
@@ -98,23 +85,6 @@ function App() {
                     Officer Page
                   </h1>
                   <OfficerPage />
-                  <Container>
-                    <Row className='vh-100 justify-content-center align-items-center'>
-                      <Col className='d-flex justify-content-center align-items-center flex-column'>
-                        {isLoading ? (
-                          <Spinner animation='border' variant='primary' />
-                        ) : (
-                          <>
-                            <Button onClick={onButtonClick}>
-                              Call next ticket!
-                            </Button>
-                            <h1>{ticket.number}</h1>
-                            {error ? <Alert>{error}</Alert> : null}
-                          </>
-                        )}
-                      </Col>
-                    </Row>
-                  </Container>
                 </div>
               ) : (
                 ""
