@@ -7,7 +7,6 @@
     "start": "node index.js",
     "test": "mocha ./test/* --delay --exit"
   },
-  "proxy": "http://localhost:3001/",
   "author": "",
   "license": "ISC",
   "dependencies": {
