@@ -64,7 +64,7 @@ app.post("/tickets", (req, res)=>{
     });
   }).catch(err=>{
     console.error(err);
-  });
+  }); 
 });
 
 app.listen(port, () => {

@@ -24,7 +24,7 @@ exports.getTicketsByServiceType = async (serviceTypeId) => {
 exports.addNewTicket = async (ticketNumber, serviceTypeId) => {
   let newTicket = {
     number: ticketNumber,
-    issuedAt: dayjs().toDate(),
+    issuedAt: dayjs().format('YYYY-MM-DDTHH:mm:ssZ[Z]'),
     serviceTypeId: serviceTypeId,
     status:"waiting"
   }
@@ -40,27 +40,22 @@ exports.getServiceType = async (serviceTypeId) => {
   .findOne({id: serviceTypeId});
 }
 
-//in today tickets,for a service, find the max ticket number
+//in today tickets,for a service, find the number of the latest ticket
 exports.getServiceType_TodayMaxNumber = async (serviceTypeId) => {
+  let now = dayjs().format('YYYY-MM-DD');
+  let myregex = "^"+now;
 
-  //all tickets of a service type
-  let tickets_ServiceType = await db //TODO: may change this with getTicketsByServiceType function
+  let youngerTicket_serviceType_today = await db
   .collection("tickets")
-  .find({serviceTypeId: serviceTypeId}).toArray();
+  .find({issuedAt:{$regex : myregex}, serviceTypeId: serviceTypeId})
+  .sort({issuedAt: -1})
+  .limit(1)
+  .toArray();
+  //console.log(youngerTicket_serviceType_today);
 
-  //all today tickets of the service type
-  let tickets_ServiceType_day = tickets_ServiceType.filter((ticket)=>{
-    return dayjs().isSame(dayjs(ticket.issuedAt),"day") == true;
-  });
-
-  if(tickets_ServiceType_day.length==0)
+  if(youngerTicket_serviceType_today.length==0)
     return 0;
 
-  let ticketsNumbers = tickets_ServiceType_day.map(ticket=>ticket.number);
-  return ticketsNumbers.reduce((max, ticketNumber)=>{
-    let x = ticketNumber.substring(1);
-    if(x>max)
-      return x;
-    return max;
-  }, 0);
+  let number = youngerTicket_serviceType_today[0].number.substring(1);
+  return number;
 }
