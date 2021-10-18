@@ -1,11 +1,18 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
-import LoginForm from './components/LoginComponent';
-import { MyNavBar } from './components/NavBarComponent';
-import {UserPage} from './components/UserComponent';
+import React, { useState } from "react";
+import LoginForm from "./components/LoginComponent";
+import { MyNavBar } from "./components/NavBarComponent";
+import { UserPage } from "./components/UserComponent";
 import { Container, Row, Col, Alert, Button, Spinner } from "react-bootstrap";
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import API from './API';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import OfficerPage from "./components/OfficerPage";
+import ManagerPage from "./components/ManagerPage";
+import API from "./API";
 
 function App() {
   const [ticket, setTicket] = useState({});
@@ -14,7 +21,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
-  // login utente, si appoggia sull'apposita API che restituisce l'id dell'utente loggato 
+  // login utente, si appoggia sull'apposita API che restituisce l'id dell'utente loggato
   // le variabili di stato dirty e message vengono "pulite"
   const doLogIn = async (credentials) => {
     try {
@@ -23,15 +30,14 @@ function App() {
       setLoggedIn(true);
       //setLoading(true);
       //setDirty(true);
-    }
-    catch (err) {
+    } catch (err) {
       //handleErrors(err)
-      console.log("APPJSERROR "+err);
+      console.log("APPJSERROR " + err);
       throw err;
     }
-  }
+  };
 
-  // logout utente, si puliscono tutte le variabili di stato ad eccezione dei template 
+  // logout utente, si puliscono tutte le variabili di stato ad eccezione dei template
   // e dei meme (che vengono successivamente ricalcolati a seguito della useEffect #3)
   const doLogOut = async () => {
     await API.logOut();
@@ -41,8 +47,7 @@ function App() {
     //setName(null);
     //setDirty(true)
     //setLoading(true);
-  }
-
+  };
 
   function onButtonClick() {
     setIsLoading(true);
@@ -56,54 +61,69 @@ function App() {
 
   return (
     <Router>
-      <Container fluid className="App">
+      <Container fluid className='App'>
         <Row>
-          {loggedIn ? <MyNavBar loggedIn={loggedIn} logout={doLogOut} user={user} /> : <MyNavBar loggedIn={loggedIn} logout={doLogOut} user={""} />}
+          {loggedIn ? (
+            <MyNavBar loggedIn={loggedIn} logout={doLogOut} user={user} />
+          ) : (
+            <MyNavBar loggedIn={loggedIn} logout={doLogOut} user={""} />
+          )}
         </Row>
         <Switch>
-
-          <Route exact path="/">
-
+          <Route exact path='/'>
             <Row>
-              {loggedIn && user.role == 'officer' ?
+              {loggedIn && user.role == "officer" ? (
                 <div>
-                  <h1 className="d-flex justify-content-center"> Officer Page</h1>
+                  <h1 className='d-flex justify-content-center'>
+                    {" "}
+                    Officer Page
+                  </h1>
                   <Row className='vh-100 justify-content-center align-items-center'>
                     <Col className='d-flex justify-content-center align-items-center flex-column'>
                       {isLoading ? (
                         <Spinner animation='border' variant='primary' />
                       ) : (
                         <>
-                          <Button onClick={onButtonClick}>Call next ticket!</Button>
+                          <Button onClick={onButtonClick}>
+                            Call next ticket!
+                          </Button>
                           <h1>{ticket.number}</h1>
                           {error ? <Alert>{error}</Alert> : null}
                         </>
                       )}
                     </Col>
                   </Row>
-                </div> : ''}
+                </div>
+              ) : (
+                ""
+              )}
 
-              {loggedIn && user.role == 'admin' ? <h1 className="d-flex justify-content-center">Admin Page</h1> : ''}
+              {loggedIn && user.role == "admin" ? (
+                <h1 className='d-flex justify-content-center'>Admin Page</h1>
+              ) : (
+                ""
+              )}
 
-              {loggedIn && user.role == 'manager' ? <h1 className="d-flex justify-content-center">Manager Page</h1> : ''}
-              
-              {loggedIn==false? <UserPage/> : ''}
+              {loggedIn && user.role == "manager" ? (
+                <h1 className='d-flex justify-content-center'>Manager Page</h1>
+              ) : (
+                ""
+              )}
+
+              {loggedIn == false ? <UserPage /> : ""}
             </Row>
-
           </Route>
 
-          <Route exact path="/login">
-            {loggedIn ? <Redirect to="/" /> : <LoginForm login={doLogIn} />}
+          <Route exact path='/login'>
+            {loggedIn ? <Redirect to='/' /> : <LoginForm login={doLogIn} />}
           </Route>
 
-          <Route path="/">
-            <Redirect to="/" />
+          <Route path='/'>
+            <Redirect to='/' />
           </Route>
         </Switch>
-
       </Container>
     </Router>
-
   );
 }
 

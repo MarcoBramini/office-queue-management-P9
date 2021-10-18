@@ -1,0 +1,9 @@
+{
+    "name": "office-queue-management",
+    "version": "1.0.0",
+    "description": "A management app for office queues",
+    "scripts": {
+        "start":"npm start --prefix server/",
+        "build": "npm ci --prefix client/ && npm ci --prefix server/ && npm run build --prefix client/"
+    }
+}
