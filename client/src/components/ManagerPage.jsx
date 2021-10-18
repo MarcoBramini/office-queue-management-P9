@@ -25,7 +25,7 @@ export default function ManagerPage() {
     API.getServicesTypes().then((newS) => {
       setServices(newS);
     });
-  }, [services]);
+  }, [services.length]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
