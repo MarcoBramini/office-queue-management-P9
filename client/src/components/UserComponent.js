@@ -18,7 +18,7 @@ function UserPage(props) {
       }, [services.length]);
 
     const getTicket = (event) => {
-        setErrorMessage("You have a ticket for '" + services[serviceID] + "' with this number " + Math.floor(Math.random() * (100 - 0 + 1) + 0)+", new ticket in the list on the left");
+        setErrorMessage("You have a ticket for '" + services[serviceID].id + "' with this number " + Math.floor(Math.random() * (100 - 0 + 1) + 0)+", new ticket in the list on the left");
         setShow(false);
     };
     const handlerServiceChanged = (event) => {
