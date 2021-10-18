@@ -47,8 +47,6 @@ exports.ticketsCollection = {
       serviceTypeId: "Testing-stuff",
       status: "served",
     },
-
-
   ],
 };
 
@@ -102,13 +100,11 @@ exports.ticketsCollection_sameLength = {
       serviceTypeId: "Testing-stuff",
       status: "waiting",
     },
-
-
   ],
 };
 
 exports.ticketsCollection_Empty = {
-  tickets: [ ],
+  tickets: [],
 };
 
 exports.serviceTypeCollection = {
@@ -118,37 +114,34 @@ exports.serviceTypeCollection = {
       id: "Test",
       counterIDs: ["1"],
       avgServingTime: "12",
-      ticketLabel: "B"
+      ticketLabel: "B",
     },
     {
       _id: "2",
       id: "Testing-stuff",
       counterIDs: ["1"],
       avgServingTime: "10",
-      ticketLabel: "C"
+      ticketLabel: "C",
     },
     {
       _id: "3",
       id: "bills-payment",
       counterIDs: ["1"],
       avgServingTime: "30",
-      ticketLabel: "C"
+      ticketLabel: "C",
     },
     {
       _id: "4",
       id: "Dont find",
       counterIDs: ["2"],
       avgServingTime: "70",
-      ticketLabel: "C"
+      ticketLabel: "C",
     },
   ],
-
 };
 
-exports.counterRecordCollection={
-  "counter-record":[
-
-  ],
+exports.counterRecordCollection = {
+  "counter-record": [],
 };
 
 exports.serviceTypesCollection = {
@@ -163,3 +156,19 @@ exports.serviceTypesCollection = {
   ],
 };
 
+exports.credentials = {
+  username: "username01",
+  password: "password01",
+};
+
+exports.user = {
+  users: [
+    {
+      _id: "fasfasfa",
+      role: "offcier",
+      username: "username01",
+      password: "$2a$10$4ZYbBh5CPYqkEbHIi8uVDuqrBTWtc333gvARP3t4Lq7IuTxVs3QTS",
+      id: 2,
+    },
+  ],
+};

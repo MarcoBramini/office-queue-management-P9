@@ -43,7 +43,7 @@ passport.use(
 // serializziamo e de-serializziamo l'utente (oggetto utente <-> sessione)
 // serializziamo l'id dell'utente e lo salviamo nella sessione: la sessione in questo modo è molto piccola
 passport.serializeUser((user, done) => {
-  done(null, user.username);
+  done(null, user.id);
 });
 
 // partendo dai dati nella sessione, estraiamo l'utente corrente (loggato)

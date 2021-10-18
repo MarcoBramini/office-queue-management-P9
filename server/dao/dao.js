@@ -2,8 +2,8 @@
 
 const dayjs = require("dayjs");
 const { MongoClient } = require("mongodb");
-const bcrypt = require('bcrypt');
-
+const bcrypt = require("bcrypt");
+const { init } = require("..");
 
 const client = new MongoClient(process.env.MONGO_CONN_STR);
 
@@ -15,7 +15,6 @@ client.connect((err, result) => {
   }
 });
 
-
 exports.getTicketsByServiceType = async (serviceTypeId) => {
   return await db
     .collection("tickets")
@@ -26,11 +25,11 @@ exports.getTicketsByServiceType = async (serviceTypeId) => {
     });
 };
 
-// dato un id restituisce l'utente corrispondente 
+// dato un id restituisce l'utente corrispondente
 exports.getUserById = async (id) => {
   return await db
     .collection("users")
-    .findOne({ id: id }, { projection: { id: 1, username:1, role: 1 } })
+    .findOne({ id: id }, { projection: { id: 1, username: 1, role: 1 } })
     .catch((err) => {
       console.error("error reading data from database: " + err);
     });
@@ -38,22 +37,20 @@ exports.getUserById = async (id) => {
 
 exports.getUser = (username, password) => {
   return new Promise((resolve, reject) => {
-    db.collection("users").findOne({ username: username }, function (err, user) {
-      if (err) {
-        console.error("error reading data from database: " + err);
+    db.collection("users").findOne(
+      { username: username },
+      function (err, user) {
+        if (err) {
+          console.error("error reading data from database: " + err);
+        } else {
+          bcrypt.compare(password, user.password).then((result) => {
+            if (result) resolve(user);
+            else resolve(false);
+          });
+        }
       }
-      else {
-        bcrypt.compare(password, user.password).then(result => {
-          if (result)
-            resolve(user);
-          else
-            resolve(false);
-        });
-      }
-    })
-
-  })
-
+    );
+  });
 };
 
 // CALL FOR TICKET OPERATIONS
