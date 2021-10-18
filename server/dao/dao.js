@@ -1,5 +1,6 @@
 "use strict";
 
+const dayjs = require("dayjs");
 const { MongoClient } = require("mongodb");
 const bcrypt = require('bcrypt');
 
@@ -180,4 +181,17 @@ exports.getServiceType = async (serviceTypeId) => {
 
 exports.getAllServiceTypes = async (serviceTypeId) => {
   return await db.collection("service-types").find().toArray();
+};
+
+exports.resetWaitingTickets = async () => {
+  return await db
+    .collection("tickets")
+    .updateMany(
+      { status: "waiting" },
+      { $set: { status: "expired", resetAt: dayjs().toISOString() } }
+    );
+};
+
+exports.getAllTickets = async () => {
+  return await db.collection("tickets").find().toArray();
 };
