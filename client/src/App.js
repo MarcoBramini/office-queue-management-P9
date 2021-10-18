@@ -2,7 +2,9 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import LoginForm from './components/LoginComponent';
 import { MyNavBar } from './components/NavBarComponent';
-import {UserPage} from './components/UserComponent';
+import { UserPage } from './components/UserComponent';
+import OfficerPage from "./components/OfficerPage";
+import ManagerPage from "./components/ManagerPage";
 import { Container, Row, Col, Alert, Button, Spinner } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import API from './API';
@@ -26,7 +28,7 @@ function App() {
     }
     catch (err) {
       //handleErrors(err)
-      console.log("APPJSERROR "+err);
+      console.log("APPJSERROR " + err);
       throw err;
     }
   }
@@ -43,10 +45,9 @@ function App() {
     //setLoading(true);
   }
 
-
   function onButtonClick() {
     setIsLoading(true);
-    fetch("http://localhost:3001/tickets/next")
+    fetch("/tickets/bills-payment")
       .then((response) => {
         response.json().then((data) => setTicket(data[0]));
       })
@@ -67,27 +68,29 @@ function App() {
             <Row>
               {loggedIn && user.role == 'officer' ?
                 <div>
-                  <h1 className="d-flex justify-content-center"> Officer Page</h1>
-                  <Row className='vh-100 justify-content-center align-items-center'>
-                    <Col className='d-flex justify-content-center align-items-center flex-column'>
-                      {isLoading ? (
-                        <Spinner animation='border' variant='primary' />
-                      ) : (
-                        <>
-                          <Button onClick={onButtonClick}>Call next ticket!</Button>
-                          <h1>{ticket.number}</h1>
-                          {error ? <Alert>{error}</Alert> : null}
-                        </>
-                      )}
-                    </Col>
-                  </Row>
+                  <OfficerPage />
+                  <Container>
+                    <Row className="vh-100 justify-content-center align-items-center">
+                      <Col className="d-flex justify-content-center align-items-center flex-column">
+                        {isLoading ? (
+                          <Spinner animation="border" variant="primary" />
+                        ) : (
+                          <>
+                            <Button onClick={onButtonClick}>Call next ticket!</Button>
+                            <h1>{ticket.number}</h1>
+                            {error ? <Alert>{error}</Alert> : null}
+                          </>
+                        )}
+                      </Col>
+                    </Row>
+                  </Container>
                 </div> : ''}
 
-              {loggedIn && user.role == 'admin' ? <h1 className="d-flex justify-content-center">Admin Page</h1> : ''}
+              {loggedIn && user.role == 'admin' ? <ManagerPage />: ''}
 
-              {loggedIn && user.role == 'manager' ? <h1 className="d-flex justify-content-center">Manager Page</h1> : ''}
-              
-              {loggedIn==false? <UserPage/> : ''}
+              {loggedIn && user.role == 'manager' ?  <h1 className="d-flex justify-content-center">Manager Page</h1>  : ''}
+
+              {loggedIn == false ? <UserPage /> : ''}
             </Row>
 
           </Route>

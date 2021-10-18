@@ -4,19 +4,26 @@
   "description": "The back-end for the office-queue-management app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "mocha ./test/* --delay --exit"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "express-validator": "^6.13.0",
+    "mocha": "^9.1.3",
     "mongodb": "^4.1.3",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "mongo-unit": "^2.0.1"
   }
 }

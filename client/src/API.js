@@ -1,4 +1,5 @@
 const BASEURL = '/api';
+const url = "http://localhost:3001/";
 
 // USER API
 
@@ -43,5 +44,31 @@ async function logIn(credentials) {
     }
   }
 
-const API = { logIn, logOut, getUserInfo};
+  async function callNextTicket(counterId) {
+    const response = await fetch(url + "tickets/serve/" + counterId);
+  
+    const ticket = await response.json();
+  
+    return ticket;
+  }
+  
+  async function postNewServiceType(newService) {
+    const response = await fetch(url + "serviceTypes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...newService }),
+    });
+  
+    if (response.ok) return null;
+    else return { err: "post error" };
+  }
+  
+  async function getServicesTypes() {
+    const response = await fetch(url + "serviceTypes");
+    const services = await response.json();
+  
+    return services;
+  }
+
+const API = { logIn, logOut, getUserInfo, postNewServiceType, getServicesTypes, callNextTicket,};
 export default API;
