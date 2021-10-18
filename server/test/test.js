@@ -74,7 +74,7 @@ describe("Call ticket Apis testing:", () => {
           .end(async (err, res) => {
             expect(err).to.be.null;
             expect(res.status).to.be.equal(200);
-            const toCheck = await server.getServedTicketsByIdOnCounterDB("68914914a4c9082c6e8dd746");
+            const toCheck = await server.getServedTicketsByTicketNumberOnCounterDB("B01");
             expect(toCheck).to.be.not.null;
             expect(toCheck.ticketNumber).to.be.equal("B01");
             expect(toCheck.counterId).to.be.equal("1");
@@ -82,7 +82,8 @@ describe("Call ticket Apis testing:", () => {
           });
       });
 
-    });
+    }); 
+    
 
     describe("There are 2 services with the same queue", () => {
       beforeEach(() => {
@@ -128,7 +129,7 @@ describe("Call ticket Apis testing:", () => {
           .end(async (err, res) => {
             expect(err).to.be.null;
             expect(res.status).to.be.equal(200);
-            const toCheck = await server.getServedTicketsByIdOnCounterDB("92914914a4d9082c6e8dd746");
+            const toCheck = await server.getServedTicketsByTicketNumberOnCounterDB("C01");
             expect(toCheck).to.be.not.null;
             expect(toCheck.ticketNumber).to.be.equal("C01");
             expect(toCheck.counterId).to.be.equal("1");

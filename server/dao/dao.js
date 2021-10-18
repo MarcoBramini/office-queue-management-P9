@@ -46,18 +46,62 @@ exports.recordServeAction = async (ticketId, counterId) => {
 };
 
 exports.getLatestTicketFromCounter = async (counterId) => {
-  return await db.collection("tickets").find({ status: "waiting" }).toArray();
+  //save in possibleServices only the services that the counter can serve
+  const possiblesServices = await db.collection("service-types").find({ counterIDs: counterId }).toArray();
+  
+  //array containing only the names of the service type (easier to work with for the aggregate function)
+  const string_possiblesServices = possiblesServices.map((element) => element.id);
+
+  //save in count the length of the queue for each service type that our counter can serve
+  const count = await db.collection("tickets").aggregate([
+    { $match: { serviceTypeId: { $in: string_possiblesServices } } },
+    { $group: { _id: "$serviceTypeId", count: { $sum: 1 } } }
+  ]).toArray();
+
+  //searching for the longest queue
+  //indexmax is the position in the array count of where the max is, 
+  //max is the max value of the queue & avgServingTime is the avgServingTime associated to the longest queue
+  let indexMax = 0;
+  let max = 0;
+  let avgServingTime = 100000;
+  count.forEach((element, index) => {
+    //check if it's higher or equal
+    if (element.count >= max) {
+      //check if they are the same
+      if (element.count != max) {
+        //if not update
+        max = element.count;
+        indexMax = index;
+        avgServingTime = possiblesServices.filter((toSearch) => toSearch.id == count[indexMax]._id)[0].avgServingTime;
+      }//if they are the same check the serving times
+      else {
+
+        //if they are the same check the serving times
+        const toCheck = possiblesServices.filter((toSearch) => toSearch.id == element._id)[0].avgServingTime;
+        if (toCheck < avgServingTime) {
+          //if the serving time is lower than update
+          max = element.count;
+          indexMax = index;
+          avgServingTime = possiblesServices.filter((toSearch) => toSearch.id == count[indexMax]._id)[0].avgServingTime;
+        }
+      }
+
+    }
+
+  });
+
+  return await db.collection("tickets").find({ status: "waiting", serviceTypeId: count[indexMax]._id }).sort({ number: 1 }).toArray();
 };
 
-
+//used for testing purposes
 exports.getTicketsByID = async (id) => {
   return await db
     .collection("tickets")
     .findOne({ _id: id })
 };
-
-exports.getServedTicketsByIdOnCounterDB = async (id) => {
+//used for testing purposes
+exports.getServedTicketsByTicketNumberOnCounterDB = async (number) => {
   return await db
     .collection("counter-record")
-    .findOne({ _id: id })
+    .findOne({ ticketNumber: number })
 };

@@ -17,7 +17,7 @@ exports.ticketsCollection = {
       number: "B03",
       issuedAt: "2021-10-15T17:00:00.000Z",
       serviceTypeId: "Test",
-      status: "served",
+      status: "waiting",
     },
     {
       _id: "68914914a4c9082c6e8dd746",
@@ -111,22 +111,29 @@ exports.serviceTypeCollection = {
     {
       _id: "1",
       id: "Test",
-      counterIDs: [1],
+      counterIDs: ["1"],
       avgServingTime: "12",
       ticketLabel: "B"
     },
     {
       _id: "2",
       id: "Testing-stuff",
-      counterIDs: [1],
+      counterIDs: ["1"],
       avgServingTime: "10",
       ticketLabel: "C"
     },
     {
       _id: "3",
       id: "bills-payment",
-      counterIDs: [1],
-      avgServingTime: "10",
+      counterIDs: ["1"],
+      avgServingTime: "30",
+      ticketLabel: "C"
+    },
+    {
+      _id: "4",
+      id: "Dont find",
+      counterIDs: ["2"],
+      avgServingTime: "70",
       ticketLabel: "C"
     },
   ],

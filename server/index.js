@@ -8,7 +8,7 @@ const {
   getLatestTicketFromCounter,
   changeTicketAsServed,
   recordServeAction,
-  getServedTicketsByIdOnCounterDB,
+  getServedTicketsByTicketNumberOnCounterDB,
   getTicketsByID,
 
 } = require("./dao/dao");
@@ -49,8 +49,8 @@ app.get(
     const counterId = req.params.counterId;
     getLatestTicketFromCounter(counterId)
       .then((tickets) => {
-        var latestTicket = tickets[0];
-        console.log(latestTicket + " counterID " + counterId);
+        const latestTicket = tickets[0];
+        console.log(latestTicket.number + " counterID " + counterId);
         changeTicketAsServed(latestTicket.number);
         recordServeAction(latestTicket.number, counterId);
         //res.send(latestTicket);
@@ -69,4 +69,4 @@ app.listen(port, () => {
 // Export main app for testing
 module.exports = app;
 module.exports.getTicketsByID = getTicketsByID;
-module.exports.getServedTicketsByIdOnCounterDB = getServedTicketsByIdOnCounterDB;
+module.exports.getServedTicketsByTicketNumberOnCounterDB = getServedTicketsByTicketNumberOnCounterDB;
