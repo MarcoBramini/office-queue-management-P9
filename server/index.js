@@ -2,7 +2,6 @@ const express = require("express");
 const { param } = require("express-validator");
 const path = require("path");
 const cors = require("cors");
-
 const {
   getTicketsByServiceType,
   getLatestTicketFromCounter,
@@ -10,11 +9,15 @@ const {
   recordServeAction,
   getServedTicketsByTicketNumberOnCounterDB,
   getTicketsByID,
-
   insertServiceType,
   getServiceType,
   getAllServiceTypes,
+  resetWaitingTickets,
+  getAllTickets,
 } = require("./dao/dao");
+const cron = require("cron");
+
+cron.job({ cronTime: "0 4 * * *", onTick: resetWaitingTickets });
 
 const port = process.env.PORT || 3001;
 
@@ -125,3 +128,5 @@ module.exports = app;
 module.exports.getTicketsByID = getTicketsByID;
 module.exports.getServedTicketsByTicketNumberOnCounterDB =
   getServedTicketsByTicketNumberOnCounterDB;
+module.exports.resetWaitingTickets = resetWaitingTickets;
+module.exports.getAllTickets = getAllTickets;
