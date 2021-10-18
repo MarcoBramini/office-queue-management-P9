@@ -1,0 +1,9 @@
+.loginform{
+    background-color: rgba(53,58,64,255);
+    border-radius: 40px;
+    color: aliceblue;
+    padding:3%; 
+    width: 40%;
+    font-size: 18px; 
+    box-shadow: 5px 5px 5px 5px rgba(53,58,64,255);
+  }
