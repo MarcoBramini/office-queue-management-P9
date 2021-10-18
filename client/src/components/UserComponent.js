@@ -1,16 +1,24 @@
 import './UserComponentCSS.css';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
+import API from "../API";
 import TicketPage from './TicketPageComponent';
 
 function UserPage(props) {
+    const [services, setServices] = useState([]);
     const [show, setShow] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [serviceID, setServiceID] = useState(0);
-    let serviceTypes = ['PO box service', 'GPO box service', 'Free Post service', 'Post Bag service', 'e-Post service']
+    //let serviceTypes = ['PO box service', 'GPO box service', 'Free Post service', 'Post Bag service', 'e-Post service']
+
+    useEffect(() => {
+        API.getServicesTypes().then((newS) => {
+          setServices(newS);
+        });
+      }, [services.length]);
 
     const getTicket = (event) => {
-        setErrorMessage("You have a ticket for '" + serviceTypes[serviceID] + "' with this number " + Math.floor(Math.random() * (100 - 0 + 1) + 0)+", new ticket in the list on the left");
+        setErrorMessage("You have a ticket for '" + services[serviceID] + "' with this number " + Math.floor(Math.random() * (100 - 0 + 1) + 0)+", new ticket in the list on the left");
         setShow(false);
     };
     const handlerServiceChanged = (event) => {
@@ -47,8 +55,8 @@ function UserPage(props) {
                                         <Row className=" mb-4">
                                             <Col >
                                                 <Form.Select size="lg" onChange={e => handlerServiceChanged(e)}>
-                                                    {serviceTypes.map((m, index) =>
-                                                        <option value={index}>{m}</option>)}
+                                                    {services.map((m, index) =>
+                                                        <option value={index}>{m.id}</option>)}
                                                 </Form.Select>
                                             </Col>
                                         </Row>
