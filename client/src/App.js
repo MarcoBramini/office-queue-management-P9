@@ -51,7 +51,7 @@ function App() {
 
   function onButtonClick() {
     setIsLoading(true);
-    fetch("http://localhost:3001/tickets/next")
+    fetch("/tickets/bills-payment")
       .then((response) => {
         response.json().then((data) => setTicket(data[0]));
       })
@@ -74,6 +74,8 @@ function App() {
             <Row>
               {loggedIn && user.role == "officer" ? (
                 <div>
+                  <OfficerPage />
+                  <ManagerPage />
                   <h1 className='d-flex justify-content-center'>
                     {" "}
                     Officer Page
