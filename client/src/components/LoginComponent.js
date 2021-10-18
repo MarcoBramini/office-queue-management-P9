@@ -36,50 +36,8 @@ function LoginForm(props) {
             }
            // setErrorMessage(validation.errors.first('username')  || validation.errors.first('password'));
         }
-        // validazione dei campi inseriti 
-        /*let valid = true;
-        if (username === '' || password.length < 6) {
-            valid = false;
-            setErrorMessage('Email cannot be empty and password must be at least six character long.');
-            setShow(true);
-        }
-        if (valid) {
-            const credentials = { username, password };
-            props.login(credentials)
-                .catch((err) => { setErrorMessage(err); setShow(true); })
-        }*/
-    };
- {/*
-    return (
        
-        <Container fluid className="vh-100 w-100 px-5 pt-2"  >
-            <Row className="mt-4 justify-content-md-center">
-                    <div className="loginform">
-                        <Form onSubmit={handleSubmit}>
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Label className="mb-3">Username</Form.Label>
-                                <div className="d-flex justify-content-center">
-                                    <Form.Control type="text" className="w-70" placeholder="Enter username" value={username} onChange={ev => setUsername(ev.target.value)} />
-                                </div>
-                            </Form.Group>
-                            <br />
-                            <Form.Group controlId="formBasicPassword">
-                                <Form.Label className="mb-3">Password</Form.Label>
-                                <div className="d-flex justify-content-center">
-                                    <Form.Control type="password" className="w-70" placeholder="Password" value={password} onChange={ev => setPassword(ev.target.value)} />
-                                </div>
-                            </Form.Group>
-                            <br />
-                            {show ? <Alert className="w-100" variant="danger" dismissible onClose={() => setShow(false)}>{errorMessage}</Alert> : ''}
-                            <Button variant="outline-info" onClick={handleSubmit} className="justify-content-end">Submit</Button>
-                        </Form>
-                    </div>
-            </Row>
-        </Container>
-        
-
-    )
-*/}
+    };
 
     return (
         <Container fluid>
@@ -94,12 +52,12 @@ function LoginForm(props) {
 
                         <Form.Group style={{ margin: "20px" }} controlId="usernameForm">
                             <Form.Control type="text" placeholder="Enter username" value={username} onChange={ev => setUsername(ev.target.value)}/>
-                            {errorMessageType == "username" ? <div className="error-message"><i className="fas fa-exclamation-triangle"></i>{" "}{errorMessage}</div> : <></>}
+                            {errorMessageType === "username" ? <div className="error-message"><i className="fas fa-exclamation-triangle"></i>{" "}{errorMessage}</div> : <></>}
                         </Form.Group>
 
                         <Form.Group style={{ margin: "20px" }} controlId="passwordForm">
                             <Form.Control type="password" placeholder="Enter password" value={password} onChange={ev => setPassword(ev.target.value)}/>
-                            {errorMessageType == "password" ? <div className="error-message"><i className="fas fa-exclamation-triangle"></i>{" "}{errorMessage}</div> : <></>}
+                            {errorMessageType === "password" ? <div className="error-message"><i className="fas fa-exclamation-triangle"></i>{" "}{errorMessage}</div> : <></>}
                             <Link style={{ fontSize: "13px", textDecoration: "underline", fontWeight: "580" }} onClick={e => e.preventDefault()}>Forgot your password?</Link>
                         </Form.Group>
 

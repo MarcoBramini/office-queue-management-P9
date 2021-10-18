@@ -86,7 +86,7 @@ function App() {
           <Route exact path="/">
 
             <Row>
-              {loggedIn && user.role == 'officer' ?
+              {loggedIn && user.role === 'officer' ?
                 <div>
                   <h1 className="d-flex justify-content-center"> Officer Page</h1>
                   <Row className='vh-100 justify-content-center align-items-center'>
@@ -104,9 +104,9 @@ function App() {
                   </Row>
                 </div> : ''}
 
-              {loggedIn && user.role == 'admin' ? <h1 className="d-flex justify-content-center">Admin Page</h1> : ''}
+              {loggedIn && user.role === 'admin' ? <h1 className="d-flex justify-content-center">Admin Page</h1> : ''}
 
-              {loggedIn && user.role == 'manager' ? <h1 className="d-flex justify-content-center">Manager Page</h1> : ''}
+              {loggedIn && user.role === 'manager' ? <h1 className="d-flex justify-content-center">Manager Page</h1> : ''}
 
               {loggedIn ? '' : <h1 className="d-flex justify-content-center">User Page</h1>}
             </Row>
