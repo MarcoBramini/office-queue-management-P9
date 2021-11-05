@@ -34,7 +34,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: lcov-report
-          path: /server/coverage/
+          path: server/coverage/lcov.info
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
